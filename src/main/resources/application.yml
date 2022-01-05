@@ -1,0 +1,26 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3310/smart-light
+    username: root
+    password: mypass
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    hibernate:
+      ddl-auto: update
+
+keycloak:
+  realm: SmartLight
+  resource: smart-light
+  public-client: true
+  auth-server-url: http://localhost:8081/auth
+  bearer-only: true
+  ssl-required: none
+
+my-keycloak:
+  url: http://localhost:8081
+  login-url: /auth/realms/${keycloak.realm}/protocol/openid-connect/token
+admin-keycloak:
+  username: admin
+  password: admin
+  realm: master
+  client: admin-cli
