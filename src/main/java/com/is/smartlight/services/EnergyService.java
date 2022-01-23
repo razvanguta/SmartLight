@@ -5,6 +5,7 @@ import com.is.smartlight.models.Energy;
 import com.is.smartlight.models.User;
 import com.is.smartlight.repositories.EnergyRepository;
 import lombok.SneakyThrows;
+import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -38,7 +39,7 @@ public class EnergyService {
     }
 
     @SneakyThrows
-    public List<Energy> getEnergyPrice(Long id){
-        return energyRepository.findByUserId(id);
+    public List<Object[]>  getEnergyPrice(Long id){
+        return energyRepository.findPriceAndDateByUserId(id);
     }
 }

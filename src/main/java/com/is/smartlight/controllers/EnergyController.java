@@ -1,5 +1,6 @@
 package com.is.smartlight.controllers;
 import com.is.smartlight.models.Energy;
+import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.security.core.Authentication;
 import com.is.smartlight.dtos.EnergyDto;
 import com.is.smartlight.dtos.RegisterDto;
@@ -42,7 +43,7 @@ public class EnergyController {
 
     @Operation(summary = "See the user energy cost history.")
     @GetMapping("/get-energy")
-    public List<Energy> addEnergy(Authentication authentication) {
+    public List<Object[]>  addEnergy(Authentication authentication) {
         KeycloakHelper keycloakHelper = new KeycloakHelper();
         return energyService.getEnergyPrice(Long.parseLong(keycloakHelper.getUser(authentication)));
     }
