@@ -29,7 +29,6 @@ public class AuthService {
 
     @SneakyThrows
     public TokenDto login(LoginDto loginDto) {
-
         Optional<User> inAppUser = userRepository.findByEmail(loginDto.getEmail());
         if (inAppUser.isEmpty()) {
             throw new NotFoundException("The user doesn't exist!");

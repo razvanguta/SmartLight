@@ -7,33 +7,25 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.List;
-import java.util.Set;
 
 @Builder
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "users")
-public class User {
+@Table(name = "energy")
+public class Energy {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private String email;
+    private Float price;
 
-    private String username;
+    private String date;
 
-    private String firstName;
-
-    private String lastName;
-
-    private LocalDate birthDate;
-
-    private String phone;
-
-    private String role;
+    @ManyToOne
+    @JoinColumn(name="user_id", nullable=false)
+    private User user;
 
 }
