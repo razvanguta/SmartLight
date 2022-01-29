@@ -15,12 +15,6 @@ import javax.validation.constraints.Size;
 @Builder
 public class LoginDto {
 
-    @NotNull(message = "Invalid client_id")
-    private String clientId;
-
-    @NotNull(message = "Invalid client_secret")
-    private String clientSecret;
-
     @NotNull(message = "Invalid email")
     @Email(message = "Invalid email")
     @Size(min = 3, max = 40, message = "Invalid email")

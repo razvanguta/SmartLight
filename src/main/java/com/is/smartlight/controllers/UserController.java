@@ -30,7 +30,7 @@ public class UserController {
     @Operation(summary = "Register users.")
     @PostMapping("/register-user")
     public ResponseEntity<?> registerUser(@RequestBody RegisterDto registerDto) {
-        userService.registerAdmin(registerDto);
+        userService.registerUser(registerDto);
         return successResponse();
     }
 

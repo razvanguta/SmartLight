@@ -32,6 +32,7 @@ public class UserService {
                 .email(registerDto.getEmail())
                 .username(registerDto.getUsername())
                 .birthDate(registerDto.getBirthDate())
+                .role(registerDto.getRole())
                 .build();
         user = userRepository.save(user);
         keycloakAdminService.registerUser(user.getId(), registerDto.getPassword(), "ROLE_USER");
@@ -48,6 +49,7 @@ public class UserService {
                 .email(registerDto.getEmail())
                 .username(registerDto.getUsername())
                 .birthDate(registerDto.getBirthDate())
+                .role(registerDto.getRole())
                 .build();
         user = userRepository.save(user);
         keycloakAdminService.registerUser(user.getId(), registerDto.getPassword(), "ROLE_ADMIN");

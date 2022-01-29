@@ -39,7 +39,7 @@ public class EnergyService {
     }
 
     @SneakyThrows
-    public List<Object[]>  getEnergyPrice(Long id){
+    public List<EnergyDto>  getEnergyPrice(Long id){
         return energyRepository.findPriceAndDateByUserId(id);
     }
 }

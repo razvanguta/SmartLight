@@ -1,5 +1,6 @@
 package com.is.smartlight.repositories;
 
+import com.is.smartlight.dtos.EnergyDto;
 import com.is.smartlight.models.Energy;
 import com.is.smartlight.models.User;
 import org.apache.commons.lang3.tuple.Pair;
@@ -12,6 +13,8 @@ import java.util.Optional;
 
 @Repository
 public interface EnergyRepository extends JpaRepository<Energy, Long> {
-    @Query("select e.price, e.date from Energy e WHERE e.user.id = ?1")
-    List<Object[]> findPriceAndDateByUserId(Long id);
+
+    @Query("select new com.is.smartlight.dtos.EnergyDto(e.price, e.date) from Energy e WHERE e.user.id = :id")
+    List<EnergyDto> findPriceAndDateByUserId(Long id);
+
 }

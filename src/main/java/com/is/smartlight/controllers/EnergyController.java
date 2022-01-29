@@ -43,7 +43,7 @@ public class EnergyController {
 
     @Operation(summary = "See the user energy cost history.")
     @GetMapping("/get-energy")
-    public List<Object[]>  addEnergy(Authentication authentication) {
+    public List<EnergyDto>  addEnergy(Authentication authentication) {
         KeycloakHelper keycloakHelper = new KeycloakHelper();
         return energyService.getEnergyPrice(Long.parseLong(keycloakHelper.getUser(authentication)));
     }

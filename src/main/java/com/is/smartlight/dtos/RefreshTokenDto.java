@@ -13,13 +13,6 @@ import javax.validation.constraints.Size;
 public class RefreshTokenDto {
 
     @NotNull
-    @Size(min = 2, max = 10)
-    private String client_id;
-
-    @NotNull
-    private String client_secret;
-
-    @NotNull
     private String refresh_token;
 
     @NotNull

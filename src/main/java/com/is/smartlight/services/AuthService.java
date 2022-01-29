@@ -8,6 +8,7 @@ import com.is.smartlight.models.User;
 import com.is.smartlight.repositories.UserRepository;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -20,6 +21,9 @@ public class AuthService {
 
     private final AuthClient authClient;
     private final UserRepository userRepository;
+
+    @Value("${keycloak.resource}")
+    private String clientId;
 
     @Autowired
     AuthService(AuthClient authClient, UserRepository userRepository) {
@@ -36,8 +40,7 @@ public class AuthService {
 
         // Set the request body
         MultiValueMap<String, String> loginCredentials = new LinkedMultiValueMap<>();
-        loginCredentials.add("client_id", loginDto.getClientId());
-        loginCredentials.add("client_secret", loginDto.getClientSecret());
+        loginCredentials.add("client_id", clientId);
         loginCredentials.add("username", inAppUser.get().getId().toString());
         loginCredentials.add("password", loginDto.getPassword());
         loginCredentials.add("grant_type", loginDto.getGrantType());
@@ -52,8 +55,7 @@ public class AuthService {
 
         // Set the request body
         MultiValueMap<String, String> refreshCredentials = new LinkedMultiValueMap<>();
-        refreshCredentials.add("client_id", refreshTokenDto.getClient_id());
-        refreshCredentials.add("client_secret", refreshTokenDto.getClient_secret());
+        refreshCredentials.add("client_id", clientId);
         refreshCredentials.add("refresh_token", refreshTokenDto.getRefresh_token());
         refreshCredentials.add("grant_type", refreshTokenDto.getGrantType());
 
