@@ -1,20 +1,19 @@
-package com.is.smartlight.models;
+package com.is.smartlight.dtos;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
-@Builder
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
-@Table(name = "lightbulbs")
-public class Lightbulb {
-
+public class LightbulbDto {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -32,10 +31,6 @@ public class Lightbulb {
     private Boolean turnedOn;
 
     private Boolean deleted;
-
-    @ManyToOne
-    @JoinColumn(name="group_id", nullable=false)
-    private LightGroup group;
 
     public Long getId() {
         return id;

@@ -1,22 +1,21 @@
-package com.is.smartlight.models;
+package com.is.smartlight.dtos;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
-@Builder
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
-@Table(name = "lightgroups")
-public class LightGroup {
-
+public class LightGroupDto {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -26,13 +25,7 @@ public class LightGroup {
 
     private Boolean deleted;
 
-    @ManyToOne
-    @JoinColumn(name="user_id", nullable=false)
-    private User user;
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "group")
-    private List<Lightbulb> lightbulbs;
-
+    private List<LightbulbDto> lightbulbs;
     public Long getId() {
         return id;
     }
@@ -57,11 +50,13 @@ public class LightGroup {
         this.deleted = deleted;
     }
 
-    public List<Lightbulb> getLightbulbs() {
+    public List<LightbulbDto> getLightbulbs() {
         return lightbulbs;
     }
 
-    public void setLightbulbs(List<Lightbulb> lightbulbs) {
+    public void setLightbulbs(List<LightbulbDto> lightbulbs) {
         this.lightbulbs = lightbulbs;
     }
+
+
 }
