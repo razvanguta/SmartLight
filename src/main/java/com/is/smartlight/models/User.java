@@ -36,4 +36,7 @@ public class User {
 
     private String role;
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    private List<LightGroup> lightGroups;
+
 }

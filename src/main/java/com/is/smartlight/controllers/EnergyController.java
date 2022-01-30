@@ -36,15 +36,15 @@ public class EnergyController {
     @Operation(summary = "Add energy cost in history.")
     @PostMapping("/add-energy")
     public ResponseEntity<?> addEnergy(@RequestBody EnergyDto energyDto, Authentication authentication) {
-        KeycloakHelper keycloakHelper = new KeycloakHelper();
-        energyService.addEnergyPrice(energyDto, new User(Long.parseLong(keycloakHelper.getUser(authentication).toString()),"user1@gmail.com","user1","User1","Userescu", LocalDate.parse("2022-01-22"),"",""));
+
+        energyService.addEnergyPrice(energyDto, Long.parseLong(KeycloakHelper.getUser(authentication)));
         return successResponse();
     }
 
     @Operation(summary = "See the user energy cost history.")
     @GetMapping("/get-energy")
     public List<EnergyDto>  addEnergy(Authentication authentication) {
-        KeycloakHelper keycloakHelper = new KeycloakHelper();
-        return energyService.getEnergyPrice(Long.parseLong(keycloakHelper.getUser(authentication)));
+
+        return energyService.getEnergyPrice(Long.parseLong(KeycloakHelper.getUser(authentication)));
     }
 }
