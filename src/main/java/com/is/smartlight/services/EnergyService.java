@@ -6,24 +6,21 @@ import com.is.smartlight.models.User;
 import com.is.smartlight.repositories.EnergyRepository;
 import com.is.smartlight.repositories.UserRepository;
 import lombok.SneakyThrows;
-import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.Random;
 
 @Service
 public class EnergyService {
+
     private final EnergyRepository energyRepository;
-    private final KeycloakAdminService keycloakAdminService;
     private final UserRepository userRepository;
 
     @Autowired
-    public EnergyService(EnergyRepository energyRepository, KeycloakAdminService keycloakAdminService, UserRepository userRepository){
+    public EnergyService(EnergyRepository energyRepository, UserRepository userRepository){
         this.energyRepository = energyRepository;
-        this.keycloakAdminService = keycloakAdminService;
         this.userRepository = userRepository;
     }
 
@@ -47,4 +44,5 @@ public class EnergyService {
     public List<EnergyDto>  getEnergyPrice(Long id){
         return energyRepository.findPriceAndDateByUserId(id);
     }
+
 }

@@ -14,6 +14,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "lightbulbs")
 public class Lightbulb {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;

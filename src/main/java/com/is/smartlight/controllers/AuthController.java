@@ -28,7 +28,6 @@ public class AuthController {
     @Operation(summary = "Logs user in and returns an access and refresh token")
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginDto loginDto) {
-        System.out.println(loginDto);
         return new ResponseEntity<>(authService.login(loginDto), HttpStatus.OK);
     }
 

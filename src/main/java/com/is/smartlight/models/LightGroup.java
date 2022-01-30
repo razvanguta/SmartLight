@@ -15,6 +15,7 @@ import java.util.List;
 @Entity
 @Table(name = "lightgroups")
 public class LightGroup {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;

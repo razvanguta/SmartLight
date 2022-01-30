@@ -10,13 +10,12 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class WeatherService {
-    private final KeycloakAdminService keycloakAdminService;
+
     private final OpenWeatherMapClient openWeatherMapClient;
 
     @Autowired
-    public WeatherService(KeycloakAdminService keycloakAdminService){
+    public WeatherService(){
         this.openWeatherMapClient = new OpenWeatherMapClient("2b169e4873efa67ac2c9ec4d5dfab1f4");
-        this.keycloakAdminService = keycloakAdminService;
     }
 
     @SneakyThrows
@@ -55,4 +54,5 @@ public class WeatherService {
         }
         return outsideLuminosityInLumens;
     }
+
 }

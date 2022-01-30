@@ -27,5 +27,4 @@ public class RegisterDto {
 
     private String phone;
 
-    private String role;
 }
