@@ -33,6 +33,8 @@ public class Lightbulb {
 
     private Boolean deleted;
 
+    private Boolean isWorking;
+
     @ManyToOne
     @JoinColumn(name="group_id", nullable=false)
     private LightGroup group;
@@ -99,5 +101,13 @@ public class Lightbulb {
 
     public void setDeleted(Boolean deleted) {
         this.deleted = deleted;
+    }
+
+    public Boolean getWorking() {
+        return isWorking;
+    }
+
+    public void setWorking(Boolean working) {
+        isWorking = working;
     }
 }
