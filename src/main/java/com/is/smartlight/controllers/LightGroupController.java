@@ -10,12 +10,12 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static com.is.smartlight.utility.HttpStatusUtility.successResponse;
 
 @RestController
 @Tag(name = "LightGroup Controller")
@@ -37,6 +37,11 @@ public class LightGroupController {
                 .stream()
                 .map(lightGroup -> modelMapper.map(lightGroup, LightGroupDto.class))
                 .collect(Collectors.toList()));
+    }
+    @PatchMapping("/weather/{id}")
+    public ResponseEntity<?> setIntensityByOutsideWeather(@PathVariable Long id, @RequestParam String city, Authentication authentication){
+        lightGroupService.setLightGroupIntensity(id);
+        return successResponse();
     }
 
 }
