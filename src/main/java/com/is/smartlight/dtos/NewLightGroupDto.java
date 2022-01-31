@@ -15,7 +15,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class LightGroupDto {
+public class NewLightGroupDto {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -24,8 +24,6 @@ public class LightGroupDto {
     private String name;
 
     private Boolean deleted;
-
-    private List<LightbulbDto> lightbulbs;
 
     public Long getId() {
         return id;
@@ -49,14 +47,6 @@ public class LightGroupDto {
 
     public void setDeleted(Boolean deleted) {
         this.deleted = deleted;
-    }
-
-    public List<LightbulbDto> getLightbulbs() {
-        return lightbulbs;
-    }
-
-    public void setLightbulbs(List<LightbulbDto> lightbulbs) {
-        this.lightbulbs = lightbulbs;
     }
 
 

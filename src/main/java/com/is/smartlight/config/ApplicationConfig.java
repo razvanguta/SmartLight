@@ -43,6 +43,7 @@ public class ApplicationConfig {
             lb.setIntensityPercentage(lbd.getIntensityPercentage());
             lb.setTurnedOn(lbd.getTurnedOn());
             lb.setDeleted(lbd.getDeleted());
+            lb.setIsWorking(lbd.getIsWorking());
 
             return lb;
         };
