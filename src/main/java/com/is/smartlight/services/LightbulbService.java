@@ -1,12 +1,5 @@
 package com.is.smartlight.services;
 
-import com.is.smartlight.config.AuthClient;
-import com.is.smartlight.models.Lightbulb;
-import com.is.smartlight.repositories.LightGroupRepository;
-import com.is.smartlight.repositories.LightbulbRepository;
-import com.is.smartlight.repositories.UserRepository;
-import lombok.SneakyThrows;
-import org.springframework.beans.factory.annotation.Autowired;
 import com.is.smartlight.dtos.LightbulbDto;
 import com.is.smartlight.models.LightGroup;
 import com.is.smartlight.models.Lightbulb;
@@ -20,14 +13,12 @@ public class LightbulbService {
     private final LightbulbRepository lightbulbRepository;
     private final KeycloakAdminService keycloakAdminService;
     private final LightGroupRepository lightGroupRepository;
-    private final WeatherService weatherService;
 
     @Autowired
-    LightbulbService(KeycloakAdminService keycloakAdminService, LightGroupRepository lightGroupRepository, LightbulbRepository lightbulbRepository, WeatherService weatherService) {
+    public LightbulbService(LightbulbRepository lightbulbRepository, KeycloakAdminService keycloakAdminService, LightGroupRepository lightGroupRepository) {
         this.lightbulbRepository = lightbulbRepository;
         this.keycloakAdminService = keycloakAdminService;
         this.lightGroupRepository = lightGroupRepository;
-        this.weatherService = weatherService;
     }
 
     public void addLightbulbToGroup(LightbulbDto lightbulbDto, Long groupId, Long uid){
@@ -60,5 +51,11 @@ public class LightbulbService {
         }
     }
 
-
+    public void updateLightbulb(Long id, Long uid, Integer r, Integer g, Integer b, Float percentage){
+        Lightbulb lightbulb = lightbulbRepository.getById(id);
+        //LightGroup lightGroup = lightbulb.getGroup();
+        //if (lightGroup.getUser().getId() == uid) {
+        lightbulbRepository.updateLightbulb(id, r, g, b, percentage);
+        //}
+    }
 }
