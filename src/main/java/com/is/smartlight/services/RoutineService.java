@@ -97,5 +97,9 @@ public class RoutineService {
         lightGroupService.activateRoutine(groupId, userId);
 
     }
+
+    public void deleteRoutine(Long id, Long userId){
+        routineRepository.deleteByIdAndUserId(id, userId);
+    }
 }
 

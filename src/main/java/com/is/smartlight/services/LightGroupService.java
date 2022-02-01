@@ -133,10 +133,11 @@ public class LightGroupService {
         Calendar rightNow = Calendar.getInstance();
         int hour = rightNow.get(Calendar.HOUR_OF_DAY);
 
-        int dayIndex = rightNow.get(Calendar.DAY_OF_WEEK) - 1;
+        int dayIndex = rightNow.get(Calendar.DAY_OF_WEEK) - 2;
+        if (dayIndex == -1) dayIndex = 6;
 
-
-        List<Routine> routineList = routineRepository.findAllByGroupId(groupId).stream().filter(routine -> routine.getDayIndex() == dayIndex).collect(Collectors.toList());
+        int finalDayIndex = dayIndex;
+        List<Routine> routineList = routineRepository.findAllByGroupId(groupId).stream().filter(routine -> routine.getDayIndex() == finalDayIndex).collect(Collectors.toList());
         System.out.println(routineList.size());
         for(Routine r: routineList){
             System.out.println(r.getEndHour());
