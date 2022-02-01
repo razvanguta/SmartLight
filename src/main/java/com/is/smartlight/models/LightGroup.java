@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Builder
@@ -35,7 +36,7 @@ public class LightGroup {
     private List<Lightbulb> lightbulbs;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "group")
-    private List<Routine> routines = new ArrayList<>(7);
+    private List<Routine> routines ;
 
 
     public Long getId() {
