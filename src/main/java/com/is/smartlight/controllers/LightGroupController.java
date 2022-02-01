@@ -42,6 +42,11 @@ public class LightGroupController {
                 .map(lightGroup -> modelMapper.map(lightGroup, LightGroupDto.class))
                 .collect(Collectors.toList()));
     }
+    @PatchMapping("/weather/{id}/{luminosity}")
+    public ResponseEntity<?> setIntensityByOutsideWeather(@PathVariable Long id, @PathVariable Integer luminosity, @RequestParam String city){
+        lightGroupService.setLightGroupIntensity(id, luminosity, "Bucharest");
+        return successResponse();
+    }
 
 
     @DeleteMapping("/{id}")

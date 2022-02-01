@@ -30,27 +30,27 @@ public class WeatherService {
                 .asJava();
         String outsideLuminosityInLumens;
         if(weather.getWeatherState().getIconId().equals("01d")){
-            outsideLuminosityInLumens = "15000 lumens";
+            outsideLuminosityInLumens = "10000 lux";
         } else if(weather.getWeatherState().getIconId().equals("02d")){
-            outsideLuminosityInLumens = "12500 lumens";
+            outsideLuminosityInLumens = "5000 lux";
         } else if(weather.getWeatherState().getIconId().equals("03d")){
-            outsideLuminosityInLumens = "10500 lumens";
+            outsideLuminosityInLumens = "2000 lux";
         } else if(weather.getWeatherState().getIconId().equals("04d")){
-            outsideLuminosityInLumens = "8870 lumens";
+            outsideLuminosityInLumens = "1000 lux";
         } else if(weather.getWeatherState().getIconId().equals("09d")){
-            outsideLuminosityInLumens = "7000 lumens";
+            outsideLuminosityInLumens = "750 lux";
         } else if(weather.getWeatherState().getIconId().equals("10d")){
-            outsideLuminosityInLumens = "9000 lumens";
+            outsideLuminosityInLumens = "2000 lux";
         } else if(weather.getWeatherState().getIconId().equals("11d")){
-            outsideLuminosityInLumens = "6000 lumens";
+            outsideLuminosityInLumens = "100 lux";
         } else if(weather.getWeatherState().getIconId().equals("13d")){
-            outsideLuminosityInLumens = "7000 lumens";
+            outsideLuminosityInLumens = "2000 lux";
         } else if(weather.getWeatherState().getIconId().equals("50d")){
-            outsideLuminosityInLumens = "5500 lumens";
+            outsideLuminosityInLumens = "200 lux";
         } else if(weather.getWeatherState().getIconId().equals("01n")){
-            outsideLuminosityInLumens = "1500 lumens";
+            outsideLuminosityInLumens = "0.1 lux";
         } else{
-            outsideLuminosityInLumens = "500 lumens";
+            outsideLuminosityInLumens = "0.01 lux";
         }
         return outsideLuminosityInLumens;
     }
