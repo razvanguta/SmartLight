@@ -1,24 +1,15 @@
 package com.is.smartlight.services;
 
-import com.is.smartlight.dtos.LightGroupDto;
 import com.is.smartlight.dtos.NewLightGroupDto;
-import com.is.smartlight.models.LightGroup;
+import com.is.smartlight.models.*;
+import com.is.smartlight.repositories.*;
 import com.is.smartlight.models.Lightbulb;
-import com.is.smartlight.repositories.EnergyRepository;
-import com.is.smartlight.models.Lightbulb;
-import com.is.smartlight.models.User;
-import com.is.smartlight.repositories.LightGroupRepository;
-import com.is.smartlight.repositories.LightbulbRepository;
-import com.is.smartlight.repositories.UserRepository;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.ws.rs.NotFoundException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -29,15 +20,24 @@ public class LightGroupService {
     private final LightbulbService lightbulbService;
     private final LightbulbRepository lightbulbRepository;
     private final WeatherService weatherService;
+    private final DefaultPresetRepository defaultPresetRepository;
+    private final UserPresetRepository userPresetRepository;
+    private final UserPresetService userPresetService;
+    private final RoutineRepository routineRepository;
 
     @Autowired
-    public LightGroupService(WeatherService weatherService, LightbulbService lightbulbService,LightGroupRepository lightGroupRepository, KeycloakAdminService keycloakAdminService, UserRepository userRepository, LightbulbRepository lightbulbRepository){
+    public LightGroupService(WeatherService weatherService, LightbulbService lightbulbService, LightGroupRepository lightGroupRepository, KeycloakAdminService keycloakAdminService, UserRepository userRepository, LightbulbRepository lightbulbRepository, DefaultPresetRepository defaultPresetRepository, UserPresetRepository userPresetRepository, UserPresetService userPresetService, RoutineRepository routineRepository){
         this.lightGroupRepository = lightGroupRepository;
         this.keycloakAdminService = keycloakAdminService;
         this.userRepository = userRepository;
         this.lightbulbRepository = lightbulbRepository;
         this.lightbulbService = lightbulbService;
         this.weatherService = weatherService;
+        this.defaultPresetRepository = defaultPresetRepository;
+        this.userPresetRepository = userPresetRepository;
+        this.userPresetService = userPresetService;
+
+        this.routineRepository = routineRepository;
     }
 
     public List<LightGroup> getLightGroups(Long id) {
@@ -103,8 +103,7 @@ public class LightGroupService {
 
         String outsideLuminosityString = weatherService.getOutsideLuminosity(city);
         int intakeLuminosity = Integer.parseInt(outsideLuminosityString.replaceAll("[^0-9]", "")) / 25; //luminozitatea care intra pe fereastra (am aproximat suprafata incaperii la 25m^2,
-                                                                                // fara legatura cu 25 din formula)
-        intakeLuminosity = 0;
+
         if(intakeLuminosity < desiredLuminosity)
 
         {
@@ -129,8 +128,31 @@ public class LightGroupService {
 
     }
 
-    public void addRoutine(String dayOfTheWeek, int start, int end){}
+    @SneakyThrows
+    public void activateRoutine(Long groupId, Long userId) {
+        Calendar rightNow = Calendar.getInstance();
+        int hour = rightNow.get(Calendar.HOUR_OF_DAY);
+
+        int dayIndex = rightNow.get(Calendar.DAY_OF_WEEK) - 1;
 
 
+        List<Routine> routineList = routineRepository.findAllByGroupId(groupId).stream().filter(routine -> routine.getDayIndex() == dayIndex).collect(Collectors.toList());
+        System.out.println(routineList.size());
+        for(Routine r: routineList){
+            System.out.println(r.getEndHour());
+            if(hour <= r.getEndHour() && hour >= r.getStartHour()){
+                Long presetId = r.getPresetId();
+                Optional<UserPreset> preset = userPresetRepository.findById(presetId);
+                if(preset.isPresent()){
+                    userPresetService.applyPresetToGroup(presetId,groupId, userId);
+                }
+                else{
+                    System.out.println("To do");
+                }
 
+            }
+
+        }
+
+    }
 }

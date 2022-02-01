@@ -4,11 +4,11 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
+import org.springframework.integration.annotation.Default;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Builder
 @Data
@@ -22,44 +22,14 @@ public class Routine {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private boolean isActive;
-    //setGroupPreset
     @ManyToOne
     @JoinColumn(name="group_id", nullable=false)
     private LightGroup group;
 
-    @ElementCollection
-    private List<String> eachHourPreset = new ArrayList<>(24);
+    private Integer startHour;
+    private Integer endHour;
+    private Long presetId;
 
-    public Long getId() {
-        return id;
-    }
+    private Integer dayIndex = -1;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public boolean isActive() {
-        return isActive;
-    }
-
-    public void setActive(boolean active) {
-        isActive = active;
-    }
-
-    public LightGroup getGroup() {
-        return group;
-    }
-
-    public void setGroup(LightGroup group) {
-        this.group = group;
-    }
-
-    public List<String> getEachHourPreset() {
-        return eachHourPreset;
-    }
-
-    public void setEachHourPreset(List<String> eachHourPreset) {
-        this.eachHourPreset = eachHourPreset;
-    }
 }
