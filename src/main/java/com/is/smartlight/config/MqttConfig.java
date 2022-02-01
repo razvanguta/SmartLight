@@ -1,4 +1,4 @@
-package com.is.smartlight;
+package com.is.smartlight.config;
 
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,7 +18,7 @@ import org.springframework.messaging.MessageHandler;
 import org.springframework.messaging.MessagingException;
 
 @Configuration
-public class MqttSmartLightApplication {
+public class MqttConfig {
 
     @Value("${mqtt.username}")
     private String mqttUsername;
@@ -26,7 +26,7 @@ public class MqttSmartLightApplication {
     @Value("${mqtt.password}")
     private String mqttPassword;
 
-    public MqttPahoClientFactory mqttClientFactory() {
+    private MqttPahoClientFactory mqttClientFactory() {
         DefaultMqttPahoClientFactory factory = new DefaultMqttPahoClientFactory();
         MqttConnectOptions options = new MqttConnectOptions();
         options.setServerURIs(new String[] { "tcp://localhost:1883"});

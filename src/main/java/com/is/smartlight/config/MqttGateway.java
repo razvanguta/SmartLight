@@ -1,4 +1,4 @@
-package com.is.smartlight;
+package com.is.smartlight.config;
 
 import org.springframework.integration.annotation.MessagingGateway;
 import org.springframework.integration.mqtt.support.MqttHeaders;
