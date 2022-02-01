@@ -89,7 +89,7 @@ public class StepDefs extends SpringIntegrationTest {
         RequestSpecification request = RestAssured.given();
         request.header("Authorization", "Bearer " + token)
                 .header("Content-Type", "application/json");
-        response = request.body("{\"id\":2233,\"name\":\"pivnita\",\"deleted\":false}").post("/lightgroups/add-group");
+        response = request.body("{\"Long\":2233,\"name\":\"pivnita\",\"deleted\":false}").post("/lightgroups/add-group");
     }
     @Then("^I delete a group$")
     public void deleteGroup(Long id){
@@ -111,5 +111,37 @@ public class StepDefs extends SpringIntegrationTest {
             Assert.assertTrue(response.jsonPath().get().toString().contains(room));
         else
             Assert.assertTrue(!response.jsonPath().get().toString().contains(room));
+    }
+
+    @Then("^I add lightbulb")
+    public void addLightbulb(Long groupId){
+        RestAssured.baseURI = BASE_URL;
+        RequestSpecification request = RestAssured.given();
+        request.header("Authorization", "Bearer " + token)
+                .header("Content-Type", "application/json");
+        response = request.body("{\"id\":0,\"redValue\":0,\"greenValue\":0,\"blueValue\":0,\"maxIntensity\":1200,\"intensityPercentage\":0,\"turnedOn\":true,\"deleted\":false,\"working\":true}")
+                .post("/lightbulbs/add-lightbulb/" + groupId.toString());
+
+    }
+    @Then("^I delete lightbulb")
+    public void deleteLightbulb(Long id){
+        RestAssured.baseURI = BASE_URL;
+        RequestSpecification request = RestAssured.given();
+        request.header("Authorization", "Bearer " + token)
+                .header("Content-Type", "application/json");
+        response = request.delete("/lightbulbs/" + id.toString());
+
+
+    }
+
+    @Then("^I move lightbulb to another group$")
+    public void moveLightbulb(List<Long> params){
+        RestAssured.baseURI = BASE_URL;
+        RequestSpecification request = RestAssured.given();
+        request.header("Authorization", "Bearer " + token)
+                .header("Content-Type", "application/json");
+        response = request.put("/lightgroups/move-lightbulb/" + params.get(0).toString() + "/" + params.get(1).toString());
+        response = request.get("/lightgroups");
+        Assert.assertTrue(response.jsonPath().get().toString().contains(params.get(1).toString()));
     }
 }
