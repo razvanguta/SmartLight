@@ -66,7 +66,7 @@ public class LightGroupService {
         for(Lightbulb lightbulb : lightbulbs){
             lightbulbRepository.deleteByGroupId(id);
         }
-        lightGroupRepository.deleteByUserId(uid);
+        lightGroupRepository.deleteByUserId(id, uid);
     }
 
     public void addGroup(NewLightGroupDto newLightGroupDto, Long uid){

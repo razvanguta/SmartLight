@@ -22,6 +22,6 @@ public interface LightGroupRepository extends JpaRepository<LightGroup, Long> {
 
     @Transactional
     @Modifying
-    @Query("UPDATE LightGroup l set l.deleted = true where l.user.id = :uid")
-    void deleteByUserId(Long uid);
+    @Query("UPDATE LightGroup l set l.deleted = true where l.user.id = :uid and l.id = :id")
+    void deleteByUserId(Long id, Long uid);
 }

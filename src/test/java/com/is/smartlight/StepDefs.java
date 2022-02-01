@@ -1,32 +1,19 @@
 package com.is.smartlight;
 
-import com.is.smartlight.config.AuthClient;
 import com.is.smartlight.controllers.AuthController;
 import com.is.smartlight.controllers.EnergyController;
+import com.is.smartlight.controllers.LightGroupController;
 import com.is.smartlight.controllers.WeatherController;
-import com.is.smartlight.dtos.EnergyDto;
 import com.is.smartlight.dtos.LoginDto;
 import com.is.smartlight.dtos.TokenDto;
-import com.is.smartlight.repositories.UserRepository;
-import com.is.smartlight.services.AuthService;
-import com.jayway.jsonpath.JsonPath;
-import io.cucumber.java.af.En;
-import io.cucumber.java.bs.A;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
-import net.minidev.json.parser.JSONParser;
 import net.minidev.json.parser.ParseException;
 import org.json.JSONException;
-import org.json.JSONObject;
 import org.junit.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
 
-import java.security.Principal;
-import java.util.Collection;
 import java.util.List;
 
 import io.restassured.RestAssured;
@@ -37,16 +24,18 @@ public class StepDefs extends SpringIntegrationTest {
     private final AuthController authController;
     public final EnergyController energyController;
     public final WeatherController weatherController;
+    public final LightGroupController lightGroupController;
     private static final String BASE_URL = "http://localhost:8080";
 
     private static String token;
     private static Response response;
     @Autowired
     public StepDefs(AuthController authController, EnergyController energyController,
-                    WeatherController weatherController) {
+                    WeatherController weatherController, LightGroupController lightGroupController) {
         this.authController = authController;
         this.energyController = energyController;
         this.weatherController = weatherController;
+        this.lightGroupController = lightGroupController;
     }
  @Given("^I authenticate user with following parameters$")
     public void authenticate(List<String> credentials) throws ParseException, JSONException {
@@ -80,4 +69,47 @@ public class StepDefs extends SpringIntegrationTest {
         System.out.println(weatherController.getOutsideLuminosity(city));
     }
 
+ @Given("^I authenticate user with next parameters$")
+ public void auth(List<String> credentials) throws ParseException, JSONException {
+     LoginDto loginDto = new LoginDto(credentials.get(0),credentials.get(1),credentials.get(2));
+     token =  ((TokenDto) authController.login(loginDto).getBody()).getAccessToken();
+ }
+    @Then("^I get list of lightgroups$")
+    public void getLightGroups(String room){
+        RestAssured.baseURI = BASE_URL;
+        RequestSpecification request = RestAssured.given();
+        request.header("Authorization", "Bearer " + token)
+                .header("Content-Type", "application/json");
+        response = request.get("/lightgroups");
+        Assert.assertTrue(response.jsonPath().get().toString().contains(room));
+    }
+    @And("^I add a new group of lights$")
+    public void addLightGroup(List<String> groupParams){
+        RestAssured.baseURI = BASE_URL;
+        RequestSpecification request = RestAssured.given();
+        request.header("Authorization", "Bearer " + token)
+                .header("Content-Type", "application/json");
+        response = request.body("{\"id\":2233,\"name\":\"pivnita\",\"deleted\":false}").post("/lightgroups/add-group");
+    }
+    @Then("^I delete a group$")
+    public void deleteGroup(Long id){
+        RestAssured.baseURI = BASE_URL;
+        RequestSpecification request = RestAssured.given();
+        request.header("Authorization", "Bearer " + token)
+                .header("Content-Type", "application/json");
+        response = request.delete("/lightgroups/" + id.toString());
+    }
+
+    @And("^I check for the  \"(creation|deletion)\" for the group$")
+    public void checkForGroup(String operation, String room){
+        RestAssured.baseURI = BASE_URL;
+        RequestSpecification request = RestAssured.given();
+        request.header("Authorization", "Bearer " + token)
+                .header("Content-Type", "application/json");
+        response = request.get("/lightgroups");
+        if(operation.equals("creation"))
+            Assert.assertTrue(response.jsonPath().get().toString().contains(room));
+        else
+            Assert.assertTrue(!response.jsonPath().get().toString().contains(room));
+    }
 }
