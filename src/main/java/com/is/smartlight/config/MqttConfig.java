@@ -12,6 +12,7 @@ import org.springframework.integration.mqtt.core.MqttPahoClientFactory;
 import org.springframework.integration.mqtt.inbound.MqttPahoMessageDrivenChannelAdapter;
 import org.springframework.integration.mqtt.outbound.MqttPahoMessageHandler;
 import org.springframework.integration.mqtt.support.DefaultPahoMessageConverter;
+import org.springframework.integration.mqtt.support.MqttHeaders;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.MessageHandler;
@@ -62,7 +63,8 @@ public class MqttConfig {
 
             @Override
             public void handleMessage(Message<?> message) throws MessagingException {
-                System.out.println(message.getPayload());
+                String topic = message.getHeaders().get(MqttHeaders.RECEIVED_TOPIC).toString();
+                System.out.println(topic + " " + message.getPayload());
             }
 
         };

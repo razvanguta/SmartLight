@@ -1,5 +1,6 @@
 package com.is.smartlight.services;
 
+import com.is.smartlight.config.MqttGateway;
 import com.is.smartlight.dtos.NewLightGroupDto;
 import com.is.smartlight.models.*;
 import com.is.smartlight.repositories.*;
@@ -24,9 +25,10 @@ public class LightGroupService {
     private final UserPresetRepository userPresetRepository;
     private final UserPresetService userPresetService;
     private final RoutineRepository routineRepository;
+    private final MqttGateway mqttGateway;
 
     @Autowired
-    public LightGroupService(WeatherService weatherService, LightbulbService lightbulbService, LightGroupRepository lightGroupRepository, KeycloakAdminService keycloakAdminService, UserRepository userRepository, LightbulbRepository lightbulbRepository, DefaultPresetRepository defaultPresetRepository, UserPresetRepository userPresetRepository, UserPresetService userPresetService, RoutineRepository routineRepository){
+    public LightGroupService(WeatherService weatherService, LightbulbService lightbulbService, LightGroupRepository lightGroupRepository, KeycloakAdminService keycloakAdminService, UserRepository userRepository, LightbulbRepository lightbulbRepository, DefaultPresetRepository defaultPresetRepository, UserPresetRepository userPresetRepository, UserPresetService userPresetService, RoutineRepository routineRepository, MqttGateway mqttGateway){
         this.lightGroupRepository = lightGroupRepository;
         this.keycloakAdminService = keycloakAdminService;
         this.userRepository = userRepository;
@@ -38,6 +40,7 @@ public class LightGroupService {
         this.userPresetService = userPresetService;
 
         this.routineRepository = routineRepository;
+        this.mqttGateway = mqttGateway;
     }
 
     public List<LightGroup> getLightGroups(Long id) {
@@ -73,7 +76,7 @@ public class LightGroupService {
         LightGroup lightGroup = LightGroup.builder()
                 .id(newLightGroupDto.getId())
                 .name(newLightGroupDto.getName())
-                .deleted(newLightGroupDto.getDeleted())
+                .deleted(false)
                 .user(user)
                 .build();
         lightGroupRepository.save(lightGroup);
@@ -98,6 +101,7 @@ public class LightGroupService {
         if (desiredLuminosity == 0){
             for (Lightbulb lightbulb : lightbulbs)
                 lightbulb.setIntensityPercentage(0.0F);
+            mqttGateway.sendToMqtt("{\"intensityPercentage\": 0.0}","/lightgroups/" + id);
             return;
         }
 
@@ -124,6 +128,7 @@ public class LightGroupService {
                 lightbulbRepository.save(lightbulb);
 
             }
+            mqttGateway.sendToMqtt("{\"intensityPercentage\": " + percentage + "}","/lightgroups/" + id);
         }
 
     }

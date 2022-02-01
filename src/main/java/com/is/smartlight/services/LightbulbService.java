@@ -11,13 +11,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class LightbulbService {
     private final LightbulbRepository lightbulbRepository;
-    private final KeycloakAdminService keycloakAdminService;
     private final LightGroupRepository lightGroupRepository;
 
     @Autowired
-    public LightbulbService(LightbulbRepository lightbulbRepository, KeycloakAdminService keycloakAdminService, LightGroupRepository lightGroupRepository) {
+    public LightbulbService(LightbulbRepository lightbulbRepository, LightGroupRepository lightGroupRepository) {
         this.lightbulbRepository = lightbulbRepository;
-        this.keycloakAdminService = keycloakAdminService;
         this.lightGroupRepository = lightGroupRepository;
     }
 
@@ -31,11 +29,11 @@ public class LightbulbService {
                     .redValue(lightbulbDto.getRedValue())
                     .blueValue(lightbulbDto.getBlueValue())
                     .greenValue(lightbulbDto.getGreenValue())
-                    .turnedOn(lightbulbDto.getTurnedOn())
-                    .working(lightbulbDto.getWorking())
+                    .turnedOn(true)
+                    .working(true)
                     .maxIntensity(lightbulbDto.getMaxIntensity())
                     .intensityPercentage(lightbulbDto.getIntensityPercentage())
-                    .deleted(lightbulbDto.getDeleted())
+                    .deleted(false)
                     .group(lightGroup)
                     .build();
             lightbulbRepository.save(lightbulb);

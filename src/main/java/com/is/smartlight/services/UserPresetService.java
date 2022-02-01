@@ -1,5 +1,6 @@
 package com.is.smartlight.services;
 
+import com.is.smartlight.config.MqttGateway;
 import com.is.smartlight.dtos.NewPresetDto;
 import com.is.smartlight.models.LightGroup;
 import com.is.smartlight.models.Lightbulb;
@@ -20,13 +21,15 @@ public class UserPresetService {
     private final UserRepository userRepository;
     private final LightGroupRepository lightGroupRepository;
     private final LightbulbRepository lightbulbRepository;
+    private final MqttGateway mqttGateway;
 
     @Autowired
-    public UserPresetService(UserPresetRepository userPresetRepository, UserRepository userRepository, LightGroupRepository lightGroupRepository, LightbulbRepository lightbulbRepository){
+    public UserPresetService(UserPresetRepository userPresetRepository, UserRepository userRepository, LightGroupRepository lightGroupRepository, LightbulbRepository lightbulbRepository, MqttGateway mqttGateway){
         this.userPresetRepository = userPresetRepository;
         this.userRepository = userRepository;
         this.lightGroupRepository = lightGroupRepository;
         this.lightbulbRepository = lightbulbRepository;
+        this.mqttGateway = mqttGateway;
     }
 
 
@@ -43,7 +46,7 @@ public class UserPresetService {
         UserPreset userPreset = UserPreset.userPresetBuilder()
                 .id(newPresetDto.getId())
                 .name(newPresetDto.getName())
-                .deleted(newPresetDto.getDeleted())
+                .deleted(false)
                 .redValue(newPresetDto.getRedValue())
                 .greenValue(newPresetDto.getGreenValue())
                 .blueValue(newPresetDto.getBlueValue())
@@ -90,5 +93,11 @@ public class UserPresetService {
                     userPreset.getBlueValue(),
                     userPreset.getIntensityPercentage());
         }
+        mqttGateway.sendToMqtt("{" +
+                "\"redValue\": " + userPreset.getRedValue() + "," +
+                "\"greenValue\": " + userPreset.getGreenValue() + "," +
+                "\"blueValue\": " + userPreset.getBlueValue() + "," +
+                "\"intensityPercentage\": " + userPreset.getIntensityPercentage() +
+                "}","/lightgroups/" + groupId);
     }
 }
