@@ -50,4 +50,12 @@ public class LightbulbService {
             lightbulbRepository.deleteLightbulb(id);
         }
     }
+
+    public void updateLightbulb(Long id, Long uid, Integer r, Integer g, Integer b, Float percentage){
+        Lightbulb lightbulb = lightbulbRepository.getById(id);
+        //LightGroup lightGroup = lightbulb.getGroup();
+        //if (lightGroup.getUser().getId() == uid) {
+        lightbulbRepository.updateLightbulb(id, r, g, b, percentage);
+        //}
+    }
 }

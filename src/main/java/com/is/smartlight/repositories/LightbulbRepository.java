@@ -18,6 +18,10 @@ public interface LightbulbRepository extends JpaRepository<Lightbulb, Long> {
         @Query("UPDATE Lightbulb l set l.deleted = true where l.id = :id")
         void deleteLightbulb(Long id);
 
+        @Transactional
+        @Modifying
+        @Query("UPDATE Lightbulb l set l.redValue = :rvalue, l.greenValue = :gvalue, l.blueValue = :bvalue, l.intensityPercentage = :percent where l.id = :id")
+        void updateLightbulb(Long id, Integer rvalue, Integer gvalue, Integer bvalue, Float percent);
 
         @Transactional
         @Modifying
