@@ -32,7 +32,7 @@ public class LightbulbService {
                     .blueValue(lightbulbDto.getBlueValue())
                     .greenValue(lightbulbDto.getGreenValue())
                     .turnedOn(lightbulbDto.getTurnedOn())
-                    .isWorking(lightbulbDto.getIsWorking())
+                    .working(lightbulbDto.getWorking())
                     .maxIntensity(lightbulbDto.getMaxIntensity())
                     .intensityPercentage(lightbulbDto.getIntensityPercentage())
                     .deleted(lightbulbDto.getDeleted())

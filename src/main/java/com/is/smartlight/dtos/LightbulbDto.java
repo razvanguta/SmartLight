@@ -32,10 +32,10 @@ public class LightbulbDto {
 
     private Boolean deleted;
 
-    private Boolean isWorking;
+    private Boolean working;
 
     public Boolean getWorking() {
-        return isWorking;
+        return working;
     }
 
     public Long getId() {
