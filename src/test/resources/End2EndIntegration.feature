@@ -18,8 +18,8 @@ Scenario: login+add-energy-history-and-check
     Then I check the outside light intensity in the city
     | Berlin |
 
- @login+get-lightgroups
-Scenario: login + get-lightgroups
+ @login+get-lightgroups+add+delete
+Scenario: login + get-lightgroups + add + delete
   Given I authenticate user with next parameters
     | string |
     | string |
@@ -36,3 +36,18 @@ Scenario: login + get-lightgroups
     | 32 |
     And I check for the  "deletion" for the group
     | pivnita |
+
+
+  @login+add-lightbulb+delete
+Scenario: login + add-lightbulb + delete
+    Given I authenticate user with next parameters
+      | string |
+      | string |
+      | password |
+      Then I add lightbulb
+        | 13 |
+      Then I move lightbulb to another group
+        | 22 |
+        | 40 |
+      Then I delete lightbulb
+        | 38 |
