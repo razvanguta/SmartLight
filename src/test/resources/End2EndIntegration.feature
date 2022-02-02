@@ -51,3 +51,7 @@ Scenario: login + add-lightbulb + delete
         | 40 |
       Then I delete lightbulb
         | 38 |
+    #todo
+    #@login+create-preset+check-preset+delete-preset+check-preset
+    #@login+add-group+create-preset+apply-custompreset-and-check
+    #@login+add-group+apply-defaultpreset-and-check

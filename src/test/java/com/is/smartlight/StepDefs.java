@@ -4,8 +4,10 @@ import com.is.smartlight.controllers.AuthController;
 import com.is.smartlight.controllers.EnergyController;
 import com.is.smartlight.controllers.LightGroupController;
 import com.is.smartlight.controllers.WeatherController;
-import com.is.smartlight.dtos.LoginDto;
-import com.is.smartlight.dtos.TokenDto;
+import com.is.smartlight.dtos.*;
+import com.is.smartlight.models.*;
+import com.is.smartlight.services.DefaultPresetService;
+import com.is.smartlight.services.UserPresetService;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -25,17 +27,21 @@ public class StepDefs extends SpringIntegrationTest {
     public final EnergyController energyController;
     public final WeatherController weatherController;
     public final LightGroupController lightGroupController;
+    public final UserPresetService userPresetService;
+    public final DefaultPresetService defaultPresetService;
     private static final String BASE_URL = "http://localhost:8080";
 
     private static String token;
     private static Response response;
     @Autowired
     public StepDefs(AuthController authController, EnergyController energyController,
-                    WeatherController weatherController, LightGroupController lightGroupController) {
+                    WeatherController weatherController, LightGroupController lightGroupController, UserPresetService userPresetService, DefaultPresetService defaultPresetService) {
         this.authController = authController;
         this.energyController = energyController;
         this.weatherController = weatherController;
         this.lightGroupController = lightGroupController;
+        this.userPresetService = userPresetService;
+        this.defaultPresetService = defaultPresetService;
     }
  @Given("^I authenticate user with following parameters$")
     public void authenticate(List<String> credentials) throws ParseException, JSONException {
@@ -144,4 +150,139 @@ public class StepDefs extends SpringIntegrationTest {
         response = request.get("/lightgroups");
         Assert.assertTrue(response.jsonPath().get().toString().contains(params.get(1).toString()));
     }
+
+    /*
+    @Then("^I check for the existence of the preset$")
+    public void getUserPresets(String presetName){
+        RestAssured.baseURI = BASE_URL;
+        RequestSpecification request = RestAssured.given();
+        request.header("Authorization", "Bearer " + token)
+                .header("Content-Type", "application/json");
+        response = request.get("/userpresets");
+        Assert.assertTrue(response.jsonPath().get().toString().contains(presetName));
+    }
+    */
+    @Then("^I add a custom user preset")
+    public void addUserPreset(List<String> presetParams) {
+        RestAssured.baseURI = BASE_URL;
+        RequestSpecification request = RestAssured.given();
+        request.header("Authorization", "Bearer " + token)
+                .header("Content-Type", "application/json");
+        response = request.body("\"name\":\"" + presetParams.get(0) + "\""
+        + ",\"deleted\":" + Boolean.parseBoolean(presetParams.get(1))
+        + ",\"redValue\":" + Integer.parseInt(presetParams.get(2))
+        + ",\"greenValue\":" + Integer.parseInt(presetParams.get(3))
+        + ",\"blueValue\":" + Integer.parseInt(presetParams.get(4))
+        + ",\"intensityPercentage\":" + Float.parseFloat(presetParams.get(5))).post("/userpresets/add-preset");
+    }
+
+    @Then("^I delete a custom user preset$")
+    public void deleteUserPreset(Long id){
+        RestAssured.baseURI = BASE_URL;
+        RequestSpecification request = RestAssured.given();
+        request.header("Authorization", "Bearer " + token)
+                .header("Content-Type", "application/json");
+        response = request.delete("/userpresets/" + id.toString());
+    }
+
+    @And("^I check for the  \"(creation|deletion)\" for the preset$")
+    public void checkForPreset(String operation, String presetName){
+        RestAssured.baseURI = BASE_URL;
+        RequestSpecification request = RestAssured.given();
+        request.header("Authorization", "Bearer " + token)
+                .header("Content-Type", "application/json");
+        response = request.get("/userpresets");
+        if(operation.equals("creation"))
+            Assert.assertTrue(response.jsonPath().get().toString().contains(presetName));
+        else
+            Assert.assertTrue(!response.jsonPath().get().toString().contains(presetName));
+    }
+
+    @And("^I apply the user preset to a group$")
+    public void applyUserPreset(List<String> params){
+        RestAssured.baseURI = BASE_URL;
+        RequestSpecification request = RestAssured.given();
+        request.header("Authorization", "Bearer " + token)
+                .header("Content-Type", "application/json");
+
+        PresetDto up = request.get("/userpresets/getPreset/" + params.get(0)).getBody().as(PresetDto.class);
+        LightGroupDto group = request.get("/lightgroups/getGroup/" + params.get(1)).getBody().as(LightGroupDto.class);
+
+        response = request.put("/userpresets/apply-preset/" + up.getId() + "/" + group.getId());
+    }
+
+    @Then("^I check if the preset has been correctly applied to the group$")
+    public void checkAppliedCustomPreset(List<String> params) {
+        RestAssured.baseURI = BASE_URL;
+        RequestSpecification request = RestAssured.given();
+        request.header("Authorization", "Bearer " + token)
+                .header("Content-Type", "application/json");
+
+        PresetDto up = request.get("/userpresets/getPreset/" + params.get(0)).getBody().as(PresetDto.class);
+        LightGroupDto group = request.get("/lightgroups/getGroup/" + params.get(1)).getBody().as(LightGroupDto.class);
+
+        Boolean presetIsApplied = true;
+
+        for(LightbulbDto l : group.getLightbulbs()){
+            if(!l.getRedValue().equals(up.getRedValue()) ||
+            !l.getGreenValue().equals(up.getGreenValue()) ||
+            !l.getBlueValue().equals(up.getBlueValue()) ||
+            !l.getIntensityPercentage().equals(up.getIntensityPercentage())){
+                presetIsApplied = false;
+                break;
+            }
+        }
+
+        Assert.assertTrue(presetIsApplied);
+    }
+
+
+
+    @And("^I apply the default preset to a group$")
+    public void applyDefaultPreset(List<String> params){
+        RestAssured.baseURI = BASE_URL;
+        RequestSpecification request = RestAssured.given();
+        request.header("Authorization", "Bearer " + token)
+                .header("Content-Type", "application/json");
+
+        DefaultPreset defaultPreset = defaultPresetService.getDefaultPresetByName(params.get(0));
+        LightGroupDto group = request.get("/lightgroups/getGroup/" + params.get(1)).getBody().as(LightGroupDto.class);
+
+        response = request.put("/defaultpresets/apply-preset/" + defaultPreset.getId() + "/" + group.getId());
+    }
+
+    @Then("^I check if the default preset has been correctly applied to the group$")
+    public void checkAppliedDefaultPreset(List<String> params) {
+        RestAssured.baseURI = BASE_URL;
+        RequestSpecification request = RestAssured.given();
+        request.header("Authorization", "Bearer " + token)
+                .header("Content-Type", "application/json");
+
+        if(!params.get(0).equals("Random")){
+            DefaultPreset defaultPreset = defaultPresetService.getDefaultPresetByName(params.get(0));
+            LightGroupDto group = request.get("/lightgroups/getGroup/" + params.get(1)).getBody().as(LightGroupDto.class);
+
+            Boolean presetIsApplied = true;
+
+
+            for(LightbulbDto l : group.getLightbulbs()){
+                if(!l.getRedValue().equals(defaultPreset.getRedValue()) ||
+                        !l.getGreenValue().equals(defaultPreset.getGreenValue()) ||
+                        !l.getBlueValue().equals(defaultPreset.getBlueValue()) ||
+                        !l.getIntensityPercentage().equals(defaultPreset.getIntensityPercentage())){
+                    presetIsApplied = false;
+                    break;
+                }
+            }
+
+            Assert.assertTrue(presetIsApplied);
+        }
+        else {
+            Assert.assertTrue(true);
+        }
+
+    }
 }
+
+
+

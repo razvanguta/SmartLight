@@ -1,5 +1,6 @@
 package com.is.smartlight.repositories;
 
+import com.is.smartlight.dtos.PresetDto;
 import com.is.smartlight.models.LightGroup;
 import com.is.smartlight.models.UserPreset;
 import org.springframework.data.jpa.repository.JpaRepository;

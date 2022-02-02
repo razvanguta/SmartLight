@@ -1,6 +1,5 @@
 package com.is.smartlight.controllers;
 
-import com.is.smartlight.dtos.LightGroupDto;
 import com.is.smartlight.dtos.NewPresetDto;
 import com.is.smartlight.dtos.PresetDto;
 import com.is.smartlight.models.UserPreset;
@@ -41,6 +40,14 @@ public class UserPresetController {
                 .stream()
                 .map(userPreset -> modelMapper.map(userPreset, PresetDto.class))
                 .collect(Collectors.toList()));
+    }
+
+    @Operation(summary = "Get user preset by name")
+    @GetMapping("/getPreset/{presetName}")
+    public PresetDto getUserPresetId(@PathVariable String presetName, Authentication authentication){
+        UserPreset userPreset = userPresetService.getUserPresetByName(presetName, Long.parseLong(KeycloakHelper.getUser(authentication)));
+        PresetDto userPresetDto= modelMapper.map(userPreset, PresetDto.class);
+        return userPresetDto;
     }
 
 

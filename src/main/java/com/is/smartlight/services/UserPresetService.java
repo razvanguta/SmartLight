@@ -2,6 +2,7 @@ package com.is.smartlight.services;
 
 import com.is.smartlight.config.MqttGateway;
 import com.is.smartlight.dtos.NewPresetDto;
+import com.is.smartlight.dtos.PresetDto;
 import com.is.smartlight.models.LightGroup;
 import com.is.smartlight.models.Lightbulb;
 import com.is.smartlight.models.User;
@@ -66,9 +67,9 @@ public class UserPresetService {
 
 
     public UserPreset getUserPresetByName(String name, Long uid){
-        UserPreset userPreset = userPresetRepository.findByNameAndUserId(name, uid);
+        return userPresetRepository.findByNameAndUserId(name, uid);
 
-        return userPreset;
+        //return userPreset;
     }
 
 

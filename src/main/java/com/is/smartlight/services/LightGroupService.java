@@ -100,6 +100,13 @@ public class LightGroupService {
             lightbulbRepository.changeLightbulbGroupId(bulbId, groupId);
         }
     }
+
+    public LightGroup getLightGroupByName(String name, Long uid){
+        return lightGroupRepository.findByNameAndUserId(name, uid);
+
+        //return userPreset;
+    }
+
     @SneakyThrows
     public void setLightGroupIntensity(Long id, int desiredLuminosity, String city){
 

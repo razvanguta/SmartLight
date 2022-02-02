@@ -19,4 +19,7 @@ public interface DefaultPresetRepository extends JpaRepository<DefaultPreset, Lo
     List<DefaultPreset> getAll();
 
     Optional<DefaultPreset> findByName(String name);
+
+    @Query("select p from DefaultPreset p where p.name = :name")
+    DefaultPreset findDefaultByName(String name);
 }

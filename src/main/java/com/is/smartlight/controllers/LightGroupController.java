@@ -3,7 +3,9 @@ package com.is.smartlight.controllers;
 
 import com.is.smartlight.dtos.LightGroupDto;
 import com.is.smartlight.dtos.NewLightGroupDto;
+import com.is.smartlight.dtos.PresetDto;
 import com.is.smartlight.models.LightGroup;
+import com.is.smartlight.models.UserPreset;
 import com.is.smartlight.services.LightGroupService;
 import com.is.smartlight.services.LightbulbService;
 import com.is.smartlight.utility.KeycloakHelper;
@@ -60,6 +62,14 @@ public class LightGroupController {
     public ResponseEntity<?> addLightGroup(@RequestBody NewLightGroupDto newLightGroupDto, Authentication authentication){
         lightGroupService.addGroup(newLightGroupDto, Long.parseLong(KeycloakHelper.getUser(authentication)));
         return successResponse();
+    }
+
+    @Operation(summary = "Get light group by name")
+    @GetMapping("/getGroup/{groupName}")
+    public LightGroupDto getUserPresetId(@PathVariable String groupName, Authentication authentication){
+        LightGroup lightGroup = lightGroupService.getLightGroupByName(groupName, Long.parseLong(KeycloakHelper.getUser(authentication)));
+        LightGroupDto lightGroupDto = modelMapper.map(lightGroup, LightGroupDto.class);
+        return lightGroupDto;
     }
 
     @Operation(summary = "Move lightbulb in light-group")

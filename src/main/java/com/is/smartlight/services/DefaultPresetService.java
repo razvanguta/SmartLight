@@ -43,6 +43,10 @@ public class DefaultPresetService {
         return onlyDefaults;
     }
 
+    public DefaultPreset getDefaultPresetByName(String name) {
+        return defaultPresetRepository.findDefaultByName(name);
+    }
+
     public void loadDefaultPresetsOnStartup() {
         //Check if default presets were already loaded
         Optional<DefaultPreset> defaultPreset = defaultPresetRepository.findByName("default");

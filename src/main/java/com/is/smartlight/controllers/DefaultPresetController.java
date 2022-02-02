@@ -1,6 +1,8 @@
 package com.is.smartlight.controllers;
 
 import com.is.smartlight.dtos.PresetDto;
+import com.is.smartlight.models.DefaultPreset;
+import com.is.smartlight.models.UserPreset;
 import com.is.smartlight.services.DefaultPresetService;
 import com.is.smartlight.utility.KeycloakHelper;
 import io.swagger.v3.oas.annotations.Operation;
@@ -45,5 +47,13 @@ public class DefaultPresetController {
     public ResponseEntity<?> applyDefaultPreset(@PathVariable Long presetId, @PathVariable Long groupId, Authentication authentication) {
         defaultPresetService.applyPresetToGroup(presetId, groupId, Long.parseLong(KeycloakHelper.getUser(authentication)));
         return successResponse();
+    }
+
+    @Operation(summary = "Get default preset by name")
+    @GetMapping("/getPreset/{presetName}")
+    public PresetDto getDefaultPresetByName(@PathVariable String presetName, Authentication authentication){
+        DefaultPreset defaultPreset = defaultPresetService.getDefaultPresetByName(presetName);
+        PresetDto defaultPresetDto= modelMapper.map(defaultPreset, PresetDto.class);
+        return defaultPresetDto;
     }
 }
