@@ -68,4 +68,18 @@ public class LightGroupController {
         lightGroupService.moveToGroup(groupId, bulbId,  Long.parseLong(KeycloakHelper.getUser(authentication)));
         return successResponse();
     }
+
+    @Operation(summary = "Turn on group lights")
+    @PutMapping("/turn-on/{groupId}")
+    public ResponseEntity<?> turnOnGroupLights(@PathVariable Long groupId, Authentication authentication){
+        lightGroupService.turnOnOffGroupLights(groupId, Long.parseLong(KeycloakHelper.getUser(authentication)), true);
+        return successResponse();
+    }
+
+    @Operation(summary = "Turn off group lights")
+    @PutMapping("/turn-off/{groupId}")
+    public ResponseEntity<?> turnOffGroupLights(@PathVariable Long groupId, Authentication authentication){
+        lightGroupService.turnOnOffGroupLights(groupId, Long.parseLong(KeycloakHelper.getUser(authentication)), false);
+        return successResponse();
+    }
 }

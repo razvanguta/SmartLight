@@ -60,7 +60,7 @@ public class UserPresetController {
     }
 
     @Operation(summary = "Apply custom preset to light group")
-    @PostMapping("/apply-preset/{presetId}/{groupId}")
+    @PutMapping("/apply-preset/{presetId}/{groupId}")
     public ResponseEntity<?> applyUserPreset(@PathVariable Long presetId, @PathVariable Long groupId, Authentication authentication){
         userPresetService.applyPresetToGroup(presetId, groupId, Long.parseLong(KeycloakHelper.getUser(authentication)));
         return successResponse();

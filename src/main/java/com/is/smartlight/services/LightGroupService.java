@@ -82,6 +82,15 @@ public class LightGroupService {
         lightGroupRepository.save(lightGroup);
 
     }
+
+    public void turnOnOffGroupLights(Long groupId, Long uid, Boolean on){
+        LightGroup lightGroup = lightGroupRepository.getById(groupId);
+
+        if(lightGroup.getUser().getId() == uid){
+            lightbulbRepository.turnOnOffLightbulbs(groupId, on);
+        }
+    }
+
     public void moveToGroup(Long groupId, Long bulbId, Long uid){
 
         LightGroup lightGroup = lightGroupRepository.getById(groupId);

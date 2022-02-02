@@ -27,4 +27,9 @@ public interface LightbulbRepository extends JpaRepository<Lightbulb, Long> {
         @Modifying
         @Query("UPDATE Lightbulb l set l.group.id = :groupId where l.id = :id")
         void changeLightbulbGroupId(Long id, Long groupId);
+
+        @Transactional
+        @Modifying
+        @Query("UPDATE Lightbulb l set l.turnedOn = :on where l.group.id = :groupId and l.working = true")
+        void turnOnOffLightbulbs(Long groupId, Boolean on);
 }
