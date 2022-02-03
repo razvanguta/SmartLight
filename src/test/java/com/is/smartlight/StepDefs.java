@@ -95,7 +95,8 @@ public class StepDefs extends SpringIntegrationTest {
         RequestSpecification request = RestAssured.given();
         request.header("Authorization", "Bearer " + token)
                 .header("Content-Type", "application/json");
-        response = request.body("{\"Long\":2233,\"name\":\"pivnita\",\"deleted\":false}").post("/lightgroups/add-group");
+        response = request.body("{\"id\":" + groupParams.get(0) + ",\"name\":\"" + groupParams.get(1) +
+                "\",\"deleted\":" + groupParams.get(2) + "}").post("/lightgroups/add-group");
     }
     @Then("^I delete a group$")
     public void deleteGroup(Long id){
@@ -120,13 +121,18 @@ public class StepDefs extends SpringIntegrationTest {
     }
 
     @Then("^I add lightbulb")
-    public void addLightbulb(Long groupId){
+    public void addLightbulb(List<String> params){
         RestAssured.baseURI = BASE_URL;
         RequestSpecification request = RestAssured.given();
         request.header("Authorization", "Bearer " + token)
                 .header("Content-Type", "application/json");
-        response = request.body("{\"id\":0,\"redValue\":0,\"greenValue\":0,\"blueValue\":0,\"maxIntensity\":1200,\"intensityPercentage\":0,\"turnedOn\":true,\"deleted\":false,\"working\":true}")
-                .post("/lightbulbs/add-lightbulb/" + groupId.toString());
+        response = request
+                .body("{\"id\":" + params.get(1) + ",\"redValue\":" + params.get(2) +
+                        ",\"greenValue\": " + params.get(3) +",\"blueValue\":" + params.get(4) +
+                        ",\"maxIntensity\":"+ params.get(5) + ",\"intensityPercentage\":" + params.get(6) +
+                        ",\"turnedOn\":" + params.get(7) +",\"deleted\":" + params.get(8) +
+                        ",\"working\":" + params.get(9) + "}")
+                .post("/lightbulbs/add-lightbulb/" + params.get(0));
 
     }
     @Then("^I delete lightbulb")

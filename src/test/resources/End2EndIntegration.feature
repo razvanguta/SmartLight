@@ -28,14 +28,14 @@ Scenario: login + get-lightgroups + add + delete
     | dormitor |
     And I add a new group of lights
     | 2233 |
-    | pivnita |
+    | sufragerie |
     | false |
     And I check for the  "creation" for the group
-    | pivnita |
+    | sufragerie |
     Then I delete a group
-    | 32 |
+    | 58 |
     And I check for the  "deletion" for the group
-    | pivnita |
+    | sufragerie |
 
 
   @login+add-lightbulb+delete
@@ -46,6 +46,15 @@ Scenario: login + add-lightbulb + delete
       | password |
       Then I add lightbulb
         | 13 |
+        | 185 |
+        | 10 |
+        | 20 |
+        | 30 |
+        | 1050 |
+        | 60 |
+        | true |
+        | false |
+        | true |
       Then I move lightbulb to another group
         | 22 |
         | 40 |
