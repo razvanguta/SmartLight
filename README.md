@@ -128,7 +128,7 @@ See the [workboard](https://github.com/razvanguta/SmartLight/projects/1) for a f
 <!-- LICENSE -->
 ## License
 
-Distributed under the FMI License.
+Distributed under the FMI License:herb:.
 
 <!-- CONTACT -->
 ## Contact
