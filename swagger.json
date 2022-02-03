@@ -1,0 +1,1177 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Smart Light",
+    "description": "A web app for the 'mind' behind a Smart Light System.",
+    "version": "V1.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8080",
+      "description": "Generated server url"
+    }
+  ],
+  "security": [
+    {
+      "bearer": [
+        "read",
+        "write"
+      ]
+    }
+  ],
+  "tags": [
+    {
+      "name": "Energy Controller",
+      "description": "Set of endpoints for add and see Energy cost."
+    },
+    {
+      "name": "Auth Controller",
+      "description": "Set of endpoints for access and refresh tokens for user."
+    },
+    {
+      "name": "Weather Controller",
+      "description": "Set of endpoints for Retrieving the weather condition."
+    },
+    {
+      "name": "User Controller",
+      "description": "Set of endpoints for Creating, Retrieving, Updating and Deleting of users."
+    }
+  ],
+  "paths": {
+    "/userpresets/apply-preset/{presetId}/{groupId}": {
+      "put": {
+        "tags": [
+          "UserPreset Controller"
+        ],
+        "summary": "Apply custom preset to light group",
+        "operationId": "applyUserPreset",
+        "parameters": [
+          {
+            "name": "presetId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "groupId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/lightgroups/turn-on/{groupId}": {
+      "put": {
+        "tags": [
+          "LightGroup Controller"
+        ],
+        "summary": "Turn on group lights",
+        "operationId": "turnOnGroupLights",
+        "parameters": [
+          {
+            "name": "groupId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/lightgroups/turn-off/{groupId}": {
+      "put": {
+        "tags": [
+          "LightGroup Controller"
+        ],
+        "summary": "Turn off group lights",
+        "operationId": "turnOffGroupLights",
+        "parameters": [
+          {
+            "name": "groupId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/lightgroups/move-lightbulb/{groupId}/{bulbId}": {
+      "put": {
+        "tags": [
+          "LightGroup Controller"
+        ],
+        "summary": "Move lightbulb in light-group",
+        "operationId": "moveLightbulbToGroup",
+        "parameters": [
+          {
+            "name": "groupId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "bulbId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/defaultpresets/apply-preset/{presetId}/{groupId}": {
+      "put": {
+        "tags": [
+          "DefaultPreset Controller"
+        ],
+        "summary": "Apply default preset to group",
+        "operationId": "applyDefaultPreset",
+        "parameters": [
+          {
+            "name": "presetId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "groupId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/register-user": {
+      "post": {
+        "tags": [
+          "User Controller"
+        ],
+        "summary": "Register users.",
+        "operationId": "registerUser",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegisterDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/register-admin": {
+      "post": {
+        "tags": [
+          "User Controller"
+        ],
+        "summary": "Register admins.",
+        "operationId": "registerAdmin",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegisterDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/userpresets/add-preset": {
+      "post": {
+        "tags": [
+          "UserPreset Controller"
+        ],
+        "summary": "Create a custom user preset",
+        "operationId": "addUserPreset",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewPresetDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/routines/addRoutine/{groupId}": {
+      "post": {
+        "tags": [
+          "Routine Controller"
+        ],
+        "operationId": "addRoutineToGroup",
+        "parameters": [
+          {
+            "name": "groupId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RoutineDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/lightgroups/add-group": {
+      "post": {
+        "tags": [
+          "LightGroup Controller"
+        ],
+        "summary": "Create light-group",
+        "operationId": "addLightGroup",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewLightGroupDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/lightbulbs/add-lightbulb/{groupId}": {
+      "post": {
+        "tags": [
+          "Lightbulb Controller"
+        ],
+        "operationId": "addLightbulbToGroup",
+        "parameters": [
+          {
+            "name": "groupId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LightbulbDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/energy/add-energy": {
+      "post": {
+        "tags": [
+          "Energy Controller"
+        ],
+        "summary": "Add energy cost in history.",
+        "operationId": "addEnergy",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EnergyDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/refresh": {
+      "post": {
+        "tags": [
+          "Auth Controller"
+        ],
+        "summary": "Receives a refresh token when the access token expired",
+        "operationId": "refresh",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RefreshTokenDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "tags": [
+          "Auth Controller"
+        ],
+        "summary": "Logs user in and returns an access and refresh token",
+        "operationId": "login",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/lightgroups/weather/{id}/{luminosity}": {
+      "patch": {
+        "tags": [
+          "LightGroup Controller"
+        ],
+        "operationId": "setIntensityByOutsideWeather",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "luminosity",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "city",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/weather/get-luminosity": {
+      "get": {
+        "tags": [
+          "Weather Controller"
+        ],
+        "summary": "Get outside luminosity.",
+        "operationId": "getOutsideLuminosity",
+        "parameters": [
+          {
+            "name": "city",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/userpresets": {
+      "get": {
+        "tags": [
+          "UserPreset Controller"
+        ],
+        "summary": "Get all custom user presets that are not deleted",
+        "operationId": "getUserPresets",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PresetDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/userpresets/getPreset/{presetName}": {
+      "get": {
+        "tags": [
+          "UserPreset Controller"
+        ],
+        "summary": "Get user preset by name",
+        "operationId": "getUserPresetId",
+        "parameters": [
+          {
+            "name": "presetName",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/PresetDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/lightgroups": {
+      "get": {
+        "tags": [
+          "LightGroup Controller"
+        ],
+        "summary": "Get all lightgroups that are not deleted.",
+        "operationId": "getLightGroups",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/LightGroupDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/lightgroups/getGroup/{groupName}": {
+      "get": {
+        "tags": [
+          "LightGroup Controller"
+        ],
+        "summary": "Get light group by name",
+        "operationId": "getUserPresetId_1",
+        "parameters": [
+          {
+            "name": "groupName",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/LightGroupDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/energy/get-energy": {
+      "get": {
+        "tags": [
+          "Energy Controller"
+        ],
+        "summary": "See the user energy cost history.",
+        "operationId": "addEnergy_1",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EnergyDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/defaultpresets": {
+      "get": {
+        "tags": [
+          "DefaultPreset Controller"
+        ],
+        "summary": "Get all the default presets",
+        "operationId": "getDefaultPresets",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PresetDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/defaultpresets/getPreset/{presetName}": {
+      "get": {
+        "tags": [
+          "DefaultPreset Controller"
+        ],
+        "summary": "Get default preset by name",
+        "operationId": "getDefaultPresetByName",
+        "parameters": [
+          {
+            "name": "presetName",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/PresetDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/userpresets/{id}": {
+      "delete": {
+        "tags": [
+          "UserPreset Controller"
+        ],
+        "summary": "Deletes the given preset",
+        "operationId": "deleteUserPreset",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/routines/{id}": {
+      "delete": {
+        "tags": [
+          "Routine Controller"
+        ],
+        "summary": "Deletes the given routine",
+        "operationId": "deleteRoutine",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/lightgroups/{id}": {
+      "delete": {
+        "tags": [
+          "LightGroup Controller"
+        ],
+        "operationId": "deleteLightGroup",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/lightbulbs/{id}": {
+      "delete": {
+        "tags": [
+          "Lightbulb Controller"
+        ],
+        "operationId": "deleteLightbulb",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "RegisterDto": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "username": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          },
+          "firstName": {
+            "type": "string"
+          },
+          "lastName": {
+            "type": "string"
+          },
+          "birthDate": {
+            "type": "string",
+            "format": "date"
+          },
+          "phone": {
+            "type": "string"
+          }
+        }
+      },
+      "NewPresetDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "name": {
+            "type": "string"
+          },
+          "deleted": {
+            "type": "boolean"
+          },
+          "redValue": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "greenValue": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "blueValue": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "intensityPercentage": {
+            "type": "number",
+            "format": "float"
+          }
+        }
+      },
+      "RoutineDto": {
+        "type": "object",
+        "properties": {
+          "startHour": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "endHour": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "presetId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "dayOfTheWeek": {
+            "type": "string"
+          }
+        }
+      },
+      "NewLightGroupDto": {
+        "required": [
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "name": {
+            "type": "string"
+          },
+          "deleted": {
+            "type": "boolean"
+          }
+        }
+      },
+      "LightbulbDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "redValue": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "greenValue": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "blueValue": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "maxIntensity": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "intensityPercentage": {
+            "type": "number",
+            "format": "float"
+          },
+          "turnedOn": {
+            "type": "boolean"
+          },
+          "deleted": {
+            "type": "boolean"
+          },
+          "working": {
+            "type": "boolean"
+          }
+        }
+      },
+      "EnergyDto": {
+        "required": [
+          "date",
+          "pricePerkWh"
+        ],
+        "type": "object",
+        "properties": {
+          "pricePerkWh": {
+            "type": "number",
+            "format": "float"
+          },
+          "date": {
+            "type": "string"
+          }
+        }
+      },
+      "RefreshTokenDto": {
+        "required": [
+          "grantType",
+          "refresh_token"
+        ],
+        "type": "object",
+        "properties": {
+          "refresh_token": {
+            "type": "string"
+          },
+          "grantType": {
+            "type": "string"
+          }
+        }
+      },
+      "LoginDto": {
+        "required": [
+          "email",
+          "password"
+        ],
+        "type": "object",
+        "properties": {
+          "email": {
+            "maxLength": 40,
+            "minLength": 3,
+            "type": "string"
+          },
+          "password": {
+            "maxLength": 30,
+            "minLength": 5,
+            "type": "string"
+          },
+          "grantType": {
+            "type": "string"
+          }
+        }
+      },
+      "PresetDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "name": {
+            "type": "string"
+          },
+          "deleted": {
+            "type": "boolean"
+          },
+          "redValue": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "greenValue": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "blueValue": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "intensityPercentage": {
+            "type": "number",
+            "format": "float"
+          }
+        }
+      },
+      "LightGroupDto": {
+        "required": [
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "name": {
+            "type": "string"
+          },
+          "deleted": {
+            "type": "boolean"
+          },
+          "lightbulbs": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LightbulbDto"
+            }
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "bearer": {
+        "type": "http",
+        "name": "Authorization",
+        "in": "header",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}

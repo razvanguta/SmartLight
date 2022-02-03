@@ -1,0 +1,127 @@
+asyncapi: '2.3.0'
+info:
+  title: SmartLight MQTT API
+  version: '1.0.0'
+  description: |
+    The SmartLight API allows you to manage groups  of lightbulbs.
+
+
+
+defaultContentType: application/json
+
+channels:
+  smartlight/lightgroups/{groupId}/setIntensity:
+    description: The topic on which the intensity of lightbulbs is changed.
+    parameters:
+      groupId:
+        $ref: '#/components/parameters/groupId'
+    publish:
+      summary: Send signal to change intensity.
+      operationId: setLightGroupIntensity
+      traits:
+        - $ref: '#/components/operationTraits/mqtt'
+      message:
+        $ref: '#/components/messages/intensity'
+
+  smartlight/lightgroups/{groupId}/preset:
+    description: The topic on which the color and intensity of lightbulbs is changed.
+    parameters:
+      groupId:
+        $ref: '#/components/parameters/groupId'
+    publish:
+      summary: Send signal to change intensity and color.
+      operationId: applyPresetToGroup
+      traits:
+        - $ref: '#/components/operationTraits/mqtt'
+      message:
+        $ref: '#/components/messages/preset'
+
+
+components:
+  messages:
+    intensity:
+      name: Intensity
+      title: Intensity
+      summary: Inform about intensity percentage that will be set
+      contentType: application/json
+      traits:
+        - $ref: '#/components/messageTraits/commonHeaders'
+      payload:
+        $ref: "#/components/schemas/intensityPayload"
+    preset:
+      name: Preset
+      title: Apply preset
+      summary: Command a lightbulb group to change it's attributes.
+      traits:
+        - $ref: '#/components/messageTraits/commonHeaders'
+      payload:
+        $ref: "#/components/schemas/preset"
+  schemas:
+
+
+    intensityPayload:
+      type: object
+      properties:
+        percentage:
+          type: number
+          minimum: 0
+          maximum: 100
+          description: Light intensity percentage.
+    redValuePayload:
+      type: object
+      properties:
+        value:
+          type: integer
+          minimum: 0
+          maximum: 255
+          description: Value of red
+    greenValuePayload:
+      type: object
+      properties:
+        value:
+          type: integer
+          minimum: 0
+          maximum: 255
+          description: Value of green
+    blueValuePayload:
+      type: object
+      properties:
+        value:
+          type: integer
+          minimum: 0
+          maximum: 255
+          description: Value of blue
+    preset:
+      type: object
+      properties:
+        redValuePayload:
+          $ref: "#/components/schemas/redValuePayload"
+        greenValuePayload:
+          $ref: "#/components/schemas/greenValuePayload"
+        blueValuePayload:
+          $ref: "#/components/schemas/blueValuePayload"
+        intensityPayload:
+          $ref: "#/components/schemas/intensityPayload"
+
+
+  parameters:
+    groupId:
+      description: The ID of the group.
+      schema:
+        type: integer
+
+  messageTraits:
+    commonHeaders:
+      headers:
+        type: object
+        properties:
+          my-app-header:
+            type: integer
+            minimum: 0
+            maximum: 100
+
+  operationTraits:
+    mqtt:
+      bindings:
+        mqtt:
+          qos: 1
