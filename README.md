@@ -1,53 +1,6 @@
 <div id="top"></div>
-<!--
-*** Thanks for checking out the Best-README-Template. If you have a suggestion
-*** that would make this better, please fork the repo and create a pull request
-*** or simply open an issue with the tag "enhancement".
-*** Don't forget to give the project a star!
-*** Thanks again! Now go create something AMAZING! :D
--->
 
-
-
-<!-- PROJECT SHIELDS -->
-<!--
-*** I'm using markdown "reference style" links for readability.
-*** Reference links are enclosed in brackets [ ] instead of parentheses ( ).
-*** See the bottom of this document for the declaration of the reference variables
-*** for contributors-url, forks-url, etc. This is an optional, concise syntax you may use.
-*** https://www.markdownguide.org/basic-syntax/#reference-style-links
--->
-[![Contributors][contributors-shield]][contributors-url]
-[![Forks][forks-shield]][forks-url]
-[![Stargazers][stars-shield]][stars-url]
-[![Issues][issues-shield]][issues-url]
-[![MIT License][license-shield]][license-url]
-[![LinkedIn][linkedin-shield]][linkedin-url]
-
-
-
-<!-- PROJECT LOGO -->
-<br />
-<div align="center">
-  <a href="https://github.com/othneildrew/Best-README-Template">
-    <img src="images/logo.png" alt="Logo" width="80" height="80">
-  </a>
-
-  <h3 align="center">Best-README-Template</h3>
-
-  <p align="center">
-    An awesome README template to jumpstart your projects!
-    <br />
-    <a href="https://github.com/othneildrew/Best-README-Template"><strong>Explore the docs »</strong></a>
-    <br />
-    <br />
-    <a href="https://github.com/othneildrew/Best-README-Template">View Demo</a>
-    ·
-    <a href="https://github.com/othneildrew/Best-README-Template/issues">Report Bug</a>
-    ·
-    <a href="https://github.com/othneildrew/Best-README-Template/issues">Request Feature</a>
-  </p>
-</div>
+<h1 align="center">SmartLight API</h1>
 
 
 
@@ -64,13 +17,11 @@
     <li>
       <a href="#getting-started">Getting Started</a>
       <ul>
-        <li><a href="#prerequisites">Prerequisites</a></li>
         <li><a href="#installation">Installation</a></li>
       </ul>
     </li>
     <li><a href="#usage">Usage</a></li>
     <li><a href="#roadmap">Roadmap</a></li>
-    <li><a href="#contributing">Contributing</a></li>
     <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
     <li><a href="#acknowledgments">Acknowledgments</a></li>
@@ -78,176 +29,122 @@
 </details>
 
 
-
-<!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
-
-There are many great README templates available on GitHub; however, I didn't find one that really suited my needs so I created this enhanced one. I want to create a README template so amazing that it'll be the last one you ever need -- I think this is it.
-
-Here's why:
-* Your time should be focused on creating something amazing. A project that solves a problem and helps others
-* You shouldn't be doing the same tasks over and over like creating a README from scratch
-* You should implement DRY principles to the rest of your life :smile:
-
-Of course, no one template will serve all projects since your needs may be different. So I'll be adding more in the near future. You may also suggest changes by forking this repo and creating a pull request or opening an issue. Thanks to all the people have contributed to expanding this template!
-
-Use the `BLANK_README.md` to get started.
-
-<p align="right">(<a href="#top">back to top</a>)</p>
-
-
+SmartLight API is made for users who want a manageble Lightning Experience in their personal homes, at the office or in clubs.
+We provide user-oriented and cost-saving solutions starting with:
+  <ol>
+    <li>
+      Automatic light intensity based on outside light in user's own city
+    </li>
+    <li>
+      Energy cost for the optimum functioning of the entire system (given user's kWh cost)
+    </li>
+    <li>
+      Custom Ambiances set by the user (ranging from light intensity to light color changes)
+    </li>
+    <li>
+      Automatic detection and notifying for burned out light bulbs in the system
+    </li>
+    <li>
+      Grouping of the lightbulbs and remote light bulb and group control (for easier management of different rooms/halls)
+    </li>
+    <li>
+      Functioning routines for lightbulbs (Turning on/off at certain hours)
+    </li>
+  </ol>
 
 ### Built With
 
-This section should list any major frameworks/libraries used to bootstrap your project. Leave any add-ons/plugins for the acknowledgements section. Here are a few examples.
-
-* [Next.js](https://nextjs.org/)
-* [React.js](https://reactjs.org/)
-* [Vue.js](https://vuejs.org/)
-* [Angular](https://angular.io/)
-* [Svelte](https://svelte.dev/)
-* [Laravel](https://laravel.com)
-* [Bootstrap](https://getbootstrap.com)
-* [JQuery](https://jquery.com)
+* [Java Spring Boot](https://spring.io/projects/spring-boot)
+* [Swagger](https://swagger.io/)
+* [Docker Desktop](https://www.docker.com/)
+* [MariaDB](https://mariadb.org/)
+* [Keycloak](https://www.keycloak.org/)
+* [Mosquitto](https://mosquitto.org/)
+* [AsyncAPI](https://www.asyncapi.com/)
+* [Cucumber](https://cucumber.io/)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
-
-
 
 <!-- GETTING STARTED -->
 ## Getting Started
 
-This is an example of how you may give instructions on setting up your project locally.
-To get a local copy up and running follow these simple example steps.
-
-### Prerequisites
-
-This is an example of how to list things you need to use the software and how to install them.
-* npm
-  ```sh
-  npm install npm@latest -g
-  ```
-
 ### Installation
 
-_Below is an example of how you can instruct your audience on installing and setting up your app. This template doesn't rely on any external dependencies or services._
-
-1. Get a free API Key at [https://example.com](https://example.com)
-2. Clone the repo
+1. Clone the repo
    ```sh
-   git clone https://github.com/your_username_/Project-Name.git
+   git clone https://github.com/razvanguta/SmartLight.git
    ```
-3. Install NPM packages
+2. Install Docker Desktop from [here](https://www.docker.com/products/docker-desktop).
+  
+3. Run MariaDB instance inside a docker container
    ```sh
-   npm install
+   docker pull mariadb:10.4
+   docker run --name mariadb -e MYSQL_ROOT_PASSWORD=mypass -p 3310:3306 -d mariadb:10.4
    ```
-4. Enter your API in `config.js`
-   ```js
-   const API_KEY = 'ENTER YOUR API';
+4. Run Keycloak instance inside a docker container
+   ```sh
+   docker pull jboss/keycloak
+   docker run -d -p 8081:8080 --name keycloak-smart jboss/keycloak
+   docker exec keycloak-smart /opt/jboss/keycloak/bin/add-user-keycloak.sh -u admin -p admin
+   docker restart keycloak-smart
+   Accessing localhost:8081/auth
+   Add Realm -> SmartLight
+   Create client -> smart-light
+   ```
+5. Run Mosquitto instance inside a docker container (from project folder)
+   ```sh
+   docker pull eclipse-mosquitto
+   docker run -it --name mosquitto -p 1883:1883 -v ${pwd}/mosquitto:/mosquitto/ -d eclipse-mosquitto
    ```
 
 <p align="right">(<a href="#top">back to top</a>)</p>
-
-
-
-<!-- USAGE EXAMPLES -->
-## Usage
-
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
-
-_For more examples, please refer to the [Documentation](https://example.com)_
-
-<p align="right">(<a href="#top">back to top</a>)</p>
-
-
 
 <!-- ROADMAP -->
 ## Roadmap
 
-- [x] Add Changelog
-- [x] Add back to top links
-- [ ] Add Additional Templates w/ Examples
-- [ ] Add "components" document to easily copy & paste sections of the readme
-- [ ] Multi-language Support
-    - [ ] Chinese
-    - [ ] Spanish
+- [x] Create Analysis Documentation (AD)
+- [x] Create issues in Github starting from the AD
+- [x] Create Workboard in Github for issues
+- [x] Spring Boot Project Setup
+- [x] DB Connections
+- [x] Keycloak authentication
+- [x] Swagger Implementation
+- [x] Working on Main Functionalities (detailed in AD)
+- [x] Connection to API for Weather Info
+- [x] Add Mosquitto for MQTT connection
+- [x] MQTT functionalities
+- [x] AsyncAPI Implementation
+- [x] Cucumber Integration
+- [x] Unit tests
+- [x] Integration tests
+- [ ] RESTler Implementation
 
-See the [open issues](https://github.com/othneildrew/Best-README-Template/issues) for a full list of proposed features (and known issues).
-
-<p align="right">(<a href="#top">back to top</a>)</p>
-
-
-
-<!-- CONTRIBUTING -->
-## Contributing
-
-Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
-
-If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
-Don't forget to give the project a star! Thanks again!
-
-1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+See the [workboard](https://github.com/razvanguta/SmartLight/projects/1) for a full list of proposed features (and known issues).
 
 <p align="right">(<a href="#top">back to top</a>)</p>
-
-
 
 <!-- LICENSE -->
 ## License
 
-Distributed under the MIT License. See `LICENSE.txt` for more information.
-
-<p align="right">(<a href="#top">back to top</a>)</p>
-
-
+Distributed under the FMI License :herb:.
 
 <!-- CONTACT -->
 ## Contact
 
-Your Name - [@your_twitter](https://twitter.com/your_username) - email@example.com
+- Antonio Bigan - [LinkedIn](https://www.linkedin.com/in/antonio-bigan/) - antonio.bigan@s.unibuc.ro
+- Denis Dăineanu - [LinkedIn](https://www.linkedin.com/in/denis-alexandru-daineanu-08a591208/) - denis.daineanu@s.unibuc.ro
+- Albert David - [LinkedIn](https://www.linkedin.com/in/albert-david-a01117196/) - albert.david@s.unibuc.ro
+- Răzvan Guță - [LinkedIn](https://www.linkedin.com/in/r%C4%83zvan-alexandru-gu%C8%9B%C4%83-6bb828192/) - razvan.guta@s.unibuc.ro
+- Dragoș Mihu - [LinkedIn](https://www.linkedin.com/in/marcel-drago%C8%99-mihu-5904031aa/) - marcel.mihu@s.unibuc.ro
+- Dan Nimară - [LinkedIn](https://www.linkedin.com/in/dan-gabriel-nimar%C4%83-488184201/) - dan.nimara@s.unibuc.ro
 
-Project Link: [https://github.com/your_username/repo_name](https://github.com/your_username/repo_name)
-
-<p align="right">(<a href="#top">back to top</a>)</p>
-
-
+Project Link: [https://github.com/razvanguta/SmartLight](https://github.com/razvanguta/SmartLight)
 
 <!-- ACKNOWLEDGMENTS -->
 ## Acknowledgments
 
-Use this space to list resources you find helpful and would like to give credit to. I've included a few of my favorites to kick things off!
-
-* [Choose an Open Source License](https://choosealicense.com)
-* [GitHub Emoji Cheat Sheet](https://www.webpagefx.com/tools/emoji-cheat-sheet)
-* [Malven's Flexbox Cheatsheet](https://flexbox.malven.co/)
-* [Malven's Grid Cheatsheet](https://grid.malven.co/)
-* [Img Shields](https://shields.io)
-* [GitHub Pages](https://pages.github.com)
-* [Font Awesome](https://fontawesome.com)
-* [React Icons](https://react-icons.github.io/react-icons/search)
+* [Ingineria Programării - Info - 2021-2022](https://teams.microsoft.com/l/channel/19%3ayKDpcuCbLsO0VQkbrpii6N83ZZ2UGVC7jRhykLFcP-o1%40thread.tacv2/General?groupId=8966868e-cdd4-49bc-ba8f-4e4031bd6ab5&tenantId=08a1a72f-fecd-4dae-8cec-471a2fb7c2f1)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
-
-
-
-<!-- MARKDOWN LINKS & IMAGES -->
-<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[contributors-shield]: https://img.shields.io/github/contributors/othneildrew/Best-README-Template.svg?style=for-the-badge
-[contributors-url]: https://github.com/othneildrew/Best-README-Template/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/othneildrew/Best-README-Template.svg?style=for-the-badge
-[forks-url]: https://github.com/othneildrew/Best-README-Template/network/members
-[stars-shield]: https://img.shields.io/github/stars/othneildrew/Best-README-Template.svg?style=for-the-badge
-[stars-url]: https://github.com/othneildrew/Best-README-Template/stargazers
-[issues-shield]: https://img.shields.io/github/issues/othneildrew/Best-README-Template.svg?style=for-the-badge
-[issues-url]: https://github.com/othneildrew/Best-README-Template/issues
-[license-shield]: https://img.shields.io/github/license/othneildrew/Best-README-Template.svg?style=for-the-badge
-[license-url]: https://github.com/othneildrew/Best-README-Template/blob/master/LICENSE.txt
-[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
-[linkedin-url]: https://linkedin.com/in/othneildrew
-[product-screenshot]: images/screenshot.png
