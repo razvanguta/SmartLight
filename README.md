@@ -31,7 +31,7 @@
 
 ## About The Project
 
-SmartLight API is made for users who want a manageble Lightning Experience in their personal homes, at the office or in clubs.
+SmartLight API is made for users who want a manageble Lightning Experience in their personal homes, at the office or in clubs (COVID permitting).
 We provide user-oriented and cost-saving solutions starting with:
   <ol>
     <li>
