@@ -89,6 +89,7 @@ public class LightGroupService {
 
         if(lightGroup.getUser().getId() == uid){
             lightbulbRepository.turnOnOffLightbulbs(groupId, on);
+            mqttGateway.sendToMqtt("{\"turnedOn\": " + on + "}","/lightgroups/" + groupId);
         }
     }
 
