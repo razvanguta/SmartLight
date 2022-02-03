@@ -50,7 +50,7 @@ We provide user-oriented and cost-saving solutions starting with:
       Grouping of the lightbulbs and remote light bulb and group control (for easier management of different rooms/halls)
     </li>
     <li>
-      Functioning routines for lightbulbs (Turning on/off at certain hours)
+      Functioning routines for lightbulbs (ambiances functioning during certain hours)
     </li>
   </ol>
 
