@@ -98,14 +98,14 @@ public class DefaultPresetService {
                         defaultPreset.get().getIntensityPercentage());
             }
 
-            /*mqttGateway.sendToMqtt("{" +
+            mqttGateway.sendToMqtt("{" +
                     "\"redValue\": " + defaultPreset.get().getRedValue() + "," +
                     "\"greenValue\": " + defaultPreset.get().getGreenValue() + "," +
                     "\"blueValue\": " + defaultPreset.get().getBlueValue() + "," +
                     "\"intensityPercentage\": " + defaultPreset.get().getIntensityPercentage() +
                     "}","/lightgroups/" + groupId);
-                    
-             */
+
+             
         }
 
 

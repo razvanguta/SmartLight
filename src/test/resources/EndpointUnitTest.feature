@@ -29,34 +29,49 @@ Scenario: login-endpoint
     Then I get list of lightgroups
       | dormitor |
 
+  @create-preset
+  Scenario: create-preset
+    Then I add a custom user preset
+      | customPresetTest1 |
+      | false |
+      | 255   |
+      | 255   |
+      | 255   |
+      | 1     |
+
+  @create-group-with-light
+    Scenario: create-group-with-light
+    Given I add a group with one light
+      | groupPresetTest |
+
   @apply-userpreset
   Scenario: apply-userpreset-endpoint
     And I apply the user preset to a group
-      | string |
-      | test2 |
+      | customPresetTest1 |
+      | groupPresetTest |
 
   @check-applied-userpreset
   Scenario: check-userpreset
     Then I check if the preset has been correctly applied to the group
-      | string |
-      | test2 |
+      | customPresetTest1 |
+      | groupPresetTest |
 
   @apply-defaultpreset
   Scenario: apply-defaultpreset-endpoint
     And I apply the default preset to a group
       | Cozy |
-      | test2 |
+      | groupPresetTest |
 
   @check-applied-defaultpreset
   Scenario: check-default
     Then I check if the default preset has been correctly applied to the group
       | Cozy |
-      | test2 |
+      | groupPresetTest |
 
   @create-preset
   Scenario: create-preset
     Then I add a custom user preset
-      | testpreset |
+      | customPresetTest2 |
       | false |
       | 255   |
       | 255   |
@@ -66,14 +81,14 @@ Scenario: login-endpoint
   @check-create-preset
   Scenario: check-preset
     And I check for the  "creation" for the preset
-      | testpreset |
+      | customPresetTest2 |
 
   @delete-preset
   Scenario: delete-preset
     Then I delete a custom user preset
-      | testpreset |
+      | customPresetTest2 |
 
   @check-delete-preset
   Scenario: check-preset
     And I check for the  "deletion" for the preset
-      | testpreset |
+      | customPresetTest2 |
