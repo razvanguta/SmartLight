@@ -15,7 +15,7 @@ public class WeatherService {
 
     @Autowired
     public WeatherService(){
-        this.openWeatherMapClient = new OpenWeatherMapClient("2b169e4873efa67ac2c9ec4d5dfab1f4");
+        this.openWeatherMapClient = new OpenWeatherMapClient("fb74a2e1ff72c45b4d6cc3dea9a619e8");
     }
 
     @SneakyThrows
