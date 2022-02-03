@@ -25,10 +25,11 @@ public class LightGroupService {
     private final UserPresetRepository userPresetRepository;
     private final UserPresetService userPresetService;
     private final RoutineRepository routineRepository;
+    private final DefaultPresetService defaultPresetService;
     private final MqttGateway mqttGateway;
 
     @Autowired
-    public LightGroupService(WeatherService weatherService, LightbulbService lightbulbService, LightGroupRepository lightGroupRepository, KeycloakAdminService keycloakAdminService, UserRepository userRepository, LightbulbRepository lightbulbRepository, DefaultPresetRepository defaultPresetRepository, UserPresetRepository userPresetRepository, UserPresetService userPresetService, RoutineRepository routineRepository, MqttGateway mqttGateway){
+    public LightGroupService(WeatherService weatherService, LightbulbService lightbulbService, LightGroupRepository lightGroupRepository, KeycloakAdminService keycloakAdminService, UserRepository userRepository, LightbulbRepository lightbulbRepository, DefaultPresetRepository defaultPresetRepository, UserPresetRepository userPresetRepository, UserPresetService userPresetService, DefaultPresetService defaultPresetService, RoutineRepository routineRepository, MqttGateway mqttGateway){
         this.lightGroupRepository = lightGroupRepository;
         this.keycloakAdminService = keycloakAdminService;
         this.userRepository = userRepository;
@@ -38,7 +39,7 @@ public class LightGroupService {
         this.defaultPresetRepository = defaultPresetRepository;
         this.userPresetRepository = userPresetRepository;
         this.userPresetService = userPresetService;
-
+        this.defaultPresetService = defaultPresetService;
         this.routineRepository = routineRepository;
         this.mqttGateway = mqttGateway;
     }
@@ -169,7 +170,7 @@ public class LightGroupService {
                     userPresetService.applyPresetToGroup(presetId,groupId, userId);
                 }
                 else{
-                    System.out.println("To do");
+                    defaultPresetService.applyPresetToGroup(presetId, groupId, userId);
                 }
 
             }

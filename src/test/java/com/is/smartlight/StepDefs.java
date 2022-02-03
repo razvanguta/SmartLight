@@ -162,27 +162,46 @@ public class StepDefs extends SpringIntegrationTest {
         Assert.assertTrue(response.jsonPath().get().toString().contains(presetName));
     }
     */
-    @Then("^I add a custom user preset")
+    @Then("^I add a group with one light$")
+    public void addGroupWithLight(String groupName) {
+        RestAssured.baseURI = BASE_URL;
+        RequestSpecification request = RestAssured.given();
+        request.header("Authorization", "Bearer " + token)
+                .header("Content-Type", "application/json");
+        response = request.body("{\"id\":0" +
+                ",\"name\":" + "\"" + groupName + "\"" +
+                ",\"deleted\":false}").post("/lightgroups/add-group");
+
+        LightGroupDto group = request.get("/lightgroups/getGroup/" + groupName).getBody().as(LightGroupDto.class);
+
+        response = request.body("{\"id\":0,\"redValue\":0,\"greenValue\":0,\"blueValue\":0,\"maxIntensity\":1200,\"intensityPercentage\":0,\"turnedOn\":true,\"deleted\":false,\"working\":true}")
+                .post("/lightbulbs/add-lightbulb/" + group.getId());
+    }
+
+    @Then("^I add a custom user preset$")
     public void addUserPreset(List<String> presetParams) {
         RestAssured.baseURI = BASE_URL;
         RequestSpecification request = RestAssured.given();
         request.header("Authorization", "Bearer " + token)
                 .header("Content-Type", "application/json");
-        response = request.body("\"name\":\"" + presetParams.get(0) + "\""
-        + ",\"deleted\":" + Boolean.parseBoolean(presetParams.get(1))
+
+        response = request.body("{\"id\":0"
+                + ",\"name\":" + "\"" + presetParams.get(0) + "\""
+        + ",\"deleted\":" + presetParams.get(1)
         + ",\"redValue\":" + Integer.parseInt(presetParams.get(2))
         + ",\"greenValue\":" + Integer.parseInt(presetParams.get(3))
         + ",\"blueValue\":" + Integer.parseInt(presetParams.get(4))
-        + ",\"intensityPercentage\":" + Float.parseFloat(presetParams.get(5))).post("/userpresets/add-preset");
+        + ",\"intensityPercentage\":" + Float.parseFloat(presetParams.get(5)) + "}").post("/userpresets/add-preset");
     }
 
     @Then("^I delete a custom user preset$")
-    public void deleteUserPreset(Long id){
+    public void deleteUserPreset(String name){
         RestAssured.baseURI = BASE_URL;
         RequestSpecification request = RestAssured.given();
         request.header("Authorization", "Bearer " + token)
                 .header("Content-Type", "application/json");
-        response = request.delete("/userpresets/" + id.toString());
+        PresetDto up = request.get("/userpresets/getPreset/" + name).getBody().as(PresetDto.class);
+        response = request.delete("/userpresets/" + up.getId().toString());
     }
 
     @And("^I check for the  \"(creation|deletion)\" for the preset$")

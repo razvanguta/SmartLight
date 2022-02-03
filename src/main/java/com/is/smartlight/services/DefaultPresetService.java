@@ -1,5 +1,6 @@
 package com.is.smartlight.services;
 
+import com.is.smartlight.config.MqttGateway;
 import com.is.smartlight.models.*;
 import com.is.smartlight.repositories.DefaultPresetRepository;
 import com.is.smartlight.repositories.LightGroupRepository;
@@ -20,19 +21,21 @@ public class DefaultPresetService {
     private final UserRepository userRepository;
     private final LightGroupRepository lightGroupRepository;
     private final LightbulbRepository lightbulbRepository;
+    private final MqttGateway mqttGateway;
 
     @Autowired
-    public DefaultPresetService(DefaultPresetRepository defaultPresetRepository, UserRepository userRepository, LightGroupRepository lightGroupRepository, LightbulbRepository lightbulbRepository){
+    public DefaultPresetService(DefaultPresetRepository defaultPresetRepository, UserRepository userRepository, LightGroupRepository lightGroupRepository, LightbulbRepository lightbulbRepository, MqttGateway mqttGateway){
         this.defaultPresetRepository = defaultPresetRepository;
         this.userRepository = userRepository;
         this.lightGroupRepository = lightGroupRepository;
         this.lightbulbRepository = lightbulbRepository;
+        this.mqttGateway = mqttGateway;
     }
 
     public List<DefaultPreset> getDefaultPresets() {
         List<DefaultPreset> defaultPresets = defaultPresetRepository.getAll();
 
-        //TODO: change this (inheritance strategy or make defaultpreset subclass)
+
         List<DefaultPreset> onlyDefaults = new ArrayList<DefaultPreset>();
         for(DefaultPreset p : defaultPresets) {
             if(!(p instanceof UserPreset)){
@@ -94,8 +97,17 @@ public class DefaultPresetService {
                         defaultPreset.get().getBlueValue(),
                         defaultPreset.get().getIntensityPercentage());
             }
+
+            /*mqttGateway.sendToMqtt("{" +
+                    "\"redValue\": " + defaultPreset.get().getRedValue() + "," +
+                    "\"greenValue\": " + defaultPreset.get().getGreenValue() + "," +
+                    "\"blueValue\": " + defaultPreset.get().getBlueValue() + "," +
+                    "\"intensityPercentage\": " + defaultPreset.get().getIntensityPercentage() +
+                    "}","/lightgroups/" + groupId);
+                    
+             */
         }
-        //TODO: default preset not present
+
 
     }
 }

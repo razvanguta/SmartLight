@@ -38,8 +38,8 @@ Scenario: login-endpoint
   @check-applied-userpreset
   Scenario: check-userpreset
     Then I check if the preset has been correctly applied to the group
-    | string |
-    | test2 |
+      | string |
+      | test2 |
 
   @apply-defaultpreset
   Scenario: apply-defaultpreset-endpoint
@@ -52,3 +52,28 @@ Scenario: login-endpoint
     Then I check if the default preset has been correctly applied to the group
       | Cozy |
       | test2 |
+
+  @create-preset
+  Scenario: create-preset
+    Then I add a custom user preset
+      | testpreset |
+      | false |
+      | 255   |
+      | 255   |
+      | 255   |
+      | 1     |
+
+  @check-create-preset
+  Scenario: check-preset
+    And I check for the  "creation" for the preset
+      | testpreset |
+
+  @delete-preset
+  Scenario: delete-preset
+    Then I delete a custom user preset
+      | testpreset |
+
+  @check-delete-preset
+  Scenario: check-preset
+    And I check for the  "deletion" for the preset
+      | testpreset |
